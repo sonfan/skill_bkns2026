@@ -1,6 +1,6 @@
 ---
 name: Build — Production Code Workflow (Super Skill)
-description: "Quy trình viết code production-grade: từ blueprint → LESSONS check → spec → dependencies → code → test → verify → commit → record. Thay thế vibe-code + gsd + typescript-pro + react + nodejs + frontend-scaffold. Kích hoạt bằng /build [task]."
+description: "Quy trình viết code production-grade: từ blueprint → LESSONS check → Qdrant recall → spec → dependencies (Beads) → code → test → verify → commit → record (Beads close + Qdrant store). v4.1 tích hợp 5-Layer Memory. Kích hoạt bằng /build [task]."
 ---
 
 # /build [task description]
@@ -44,6 +44,19 @@ NẾU không có blueprint:
 3. Đọc ARCHITECTURE.md/docs → patterns hiện có, không invent pattern mới
 
 4. NẾU có ACTIVE_CONTEXT.md → restore working state
+
+5. ⭐ QDRANT RECALL (Layer 4 — nếu available):
+   → qdrant_find("[task description]")
+   → Lấy top 3 patterns/lessons liên quan
+   → Hiển thị: "🧠 Qdrant nhớ: [N] patterns liên quan"
+   → Nếu Qdrant chưa kết nối → bỏ qua, KHÔNG báo lỗi
+
+6. ⭐ BEADS CONTEXT (Layer 5 — nếu available):
+   → NẾU task bắt đầu từ Beads issue (bd-XXXX):
+     bd show <id> --json → load task details, dependencies, notes
+   → NẾU .beads/ tồn tại:
+     bd ready --json → hiển thị tasks sẵn sàng
+   → Nếu Beads chưa init → bỏ qua, KHÔNG báo lỗi
 ```
 
 **LESSONS áp dụng cho task này:**
@@ -154,7 +167,7 @@ Wave 3 — Polish: UI, validation, edge cases, tests
 
 ---
 
-### Step 2 — DEPENDENCY CHECK (MỚI — từ bkns-minicrm)
+### Step 2 — DEPENDENCY CHECK (Enhanced v4.1)
 
 ```
 1. Files trong WHAT có phụ thuộc vào code chưa tồn tại?
@@ -166,6 +179,13 @@ Wave 3 — Polish: UI, validation, edge cases, tests
 
 3. Task trong NEXT-TODO.md có dependency nào chưa hoàn thành?
    NẾU CÓ → cảnh báo và hỏi user có tiếp tục không
+
+4. ⭐ BEADS DEPENDENCY CHECK (Layer 5 — nếu available):
+   → NẾU task là Beads issue (bd-XXXX):
+     bd dep list <id> --json → check blocking issues
+     NẾU có blocker chưa close → cảnh báo: "⚠️ Blocked by bd-YYYY"
+   → bd update <id> --claim → claim task, set status in_progress
+   → Nếu Beads chưa init → bỏ qua, dùng NEXT-TODO.md
 ```
 
 ---
@@ -283,7 +303,7 @@ git commit -m "feat(module): mô tả ngắn gọn ≤ 72 ký tự"
 
 ---
 
-### Step 7 — RECORD (Lessons + State)
+### Step 7 — RECORD (Lessons + State + Beads + Qdrant)
 
 ```
 1. Cập nhật ACTIVE_CONTEXT.md:
@@ -296,6 +316,19 @@ git commit -m "feat(module): mô tả ngắn gọn ≤ 72 ký tự"
 
 3. Cập nhật STATE.md (nếu dùng Wave):
    - Wave hiện tại, task vừa xong, task tiếp theo
+
+4. ⭐ BEADS CLOSE (Layer 5 — nếu available):
+   → NẾU task là Beads issue (bd-XXXX):
+     bd close <id> --reason "Completed: [commit message]" --json
+   → NẾU phát hiện follow-up work:
+     bd create "Follow-up: [mô tả]" -p 2 --json
+   → Nếu Beads chưa init → bỏ qua
+
+5. ⭐ QDRANT STORE (Layer 4 — nếu available):
+   → NẾU có lesson/pattern mới:
+     qdrant_store(content, {project, type, tags, date})
+   → Metadata:  {type: "lesson"|"pattern"|"decision"|"bug_fix"}
+   → Nếu Qdrant chưa kết nối → bỏ qua
 ```
 
 ---

@@ -1,6 +1,6 @@
 ---
 name: Plan — Task Blueprint Generator
-description: "Tạo blueprint chi tiết cho task phức tạp: Read → Implement → Test → Docs. Học từ bkns-minicrm PR commands pattern. Output: .agent/commands/task-NNN.md. Kích hoạt bằng /plan [feature name]."
+description: "Tạo blueprint chi tiết cho task phức tạp: Qdrant recall → Read → Spec → Blueprint → Beads tasks. v4.1 tích hợp 5-Layer Memory. Output: .agent/commands/task-NNN.md + Beads epic. Kích hoạt bằng /plan [feature name]."
 ---
 
 # /plan [feature name]
@@ -32,6 +32,15 @@ description: "Tạo blueprint chi tiết cho task phức tạp: Read → Impleme
 3. Đọc LESSONS.md → warnings liên quan
 4. Đọc NEXT-TODO.md → dependencies với task khác
 5. Scan code hiện tại → identify files cần tạo/sửa
+
+6. ⭐ QDRANT RECALL (Layer 4 — nếu available):
+   → qdrant_find("plan: [feature name]")
+   → Tìm patterns/plans tương tự đã làm (cross-project)
+   → Nếu Qdrant chưa kết nối → bỏ qua
+
+7. ⭐ BEADS CONTEXT (Layer 5 — nếu available):
+   → bd ready --json → check tasks liên quan đã có
+   → Nếu Beads chưa init → bỏ qua
 ```
 
 ---
@@ -109,7 +118,7 @@ After completing:
 
 ---
 
-### Step 4 — PROGRESS TRACKING
+### Step 4 — PROGRESS TRACKING (Enhanced v4.1)
 
 Cập nhật NEXT-TODO.md thành dạng bảng (học từ bkns-minicrm progress.md):
 
@@ -127,6 +136,25 @@ T-001 (Foundation)
   ├── T-002 (Logic) ← depends on T-001
   │     └── T-004 (UI) ← depends on T-002
   └── T-003 (API) ← depends on T-001
+```
+
+⭐ **BEADS TASK CREATION (Layer 5 — nếu available):**
+
+```bash
+# Tạo epic cho feature
+bd create "[Feature Name]" -t epic -p 1 --json
+
+# Tạo sub-tasks
+bd create "[Task 1: Foundation]" --parent <epic-id> -p 1 --json
+bd create "[Task 2: Logic]" --parent <epic-id> -p 1 --json
+bd create "[Task 3: Tests]" --parent <epic-id> -p 2 --json
+
+# Link dependencies
+bd dep add <task-2-id> <task-1-id>    # Task 2 blocked by Task 1
+bd dep add <task-3-id> <task-2-id>    # Task 3 blocked by Task 2
+```
+
+> Nếu Beads chưa init → bỏ qua, chỉ dùng NEXT-TODO.md
 ```
 
 ---

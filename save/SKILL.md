@@ -1,6 +1,6 @@
 ---
 name: Save — Đóng gói & Xuất bản Production Code
-description: "Kết thúc phiên làm việc toàn diện: review 7 tiêu chí, ghi LESSONS, cập nhật docs, atomic commit, push. Thay thế review + save + checkpoint cũ. Kích hoạt bằng lệnh /save."
+description: "Kết thúc phiên làm việc toàn diện: review 7 tiêu chí, ghi LESSONS, cập nhật docs, Beads close + compact, Qdrant store knowledge, atomic commit, push. v4.1 tích hợp 5-Layer Memory. Kích hoạt bằng lệnh /save."
 ---
 
 # /save
@@ -114,7 +114,7 @@ Convention commits: `feat | fix | chore | docs | perf | sec | test`
 
 ---
 
-### Bước 6 — MEMORY CONSOLIDATION
+### Bước 6 — MEMORY CONSOLIDATION (Enhanced v4.1)
 
 ```
 1. NẾU có ACTIVE_CONTEXT.md:
@@ -124,8 +124,22 @@ Convention commits: `feat | fix | chore | docs | perf | sec | test`
 2. NẾU STATE.md tồn tại:
    → Cập nhật: version, phase, task xong, task tiếp theo
 
-3. NẾU Qdrant available:
-   → Store lessons mới vào collection (curl scripts)
+3. ⭐ BEADS CONSOLIDATION (Layer 5 — nếu available):
+   → Close các issues đã hoàn thành trong phiên:
+     bd close <id1> <id2> --reason "Completed in session" --json
+   → Tạo follow-up issues nếu có task chưa xong:
+     bd create "Follow-up: [mô tả]" -p 2 --json
+   → Gợi ý compact task cũ:
+     bd admin compact --days 90 --dry-run
+     NẾU có tasks cũ → hỏi user: "Có [N] tasks đã đóng > 90 ngày. Compact?"
+   → Nếu Beads chưa init → bỏ qua
+
+4. ⭐ QDRANT STORE (Layer 4 — nếu available):
+   → Tổng hợp session highlights:
+     - Lessons mới → qdrant_store(lesson, {project, tags, type: "lesson"})
+     - Patterns hay → qdrant_store(pattern, {project, tags, type: "pattern"})
+     - Quyết định quan trọng → qdrant_store(decision, {project, tags, type: "decision"})
+   → Nếu Qdrant chưa kết nối → bỏ qua
 ```
 
 ---
@@ -141,8 +155,14 @@ Convention commits: `feat | fix | chore | docs | perf | sec | test`
 📦 COMMITS: [N commits]
 🔗 PUSHED: main → origin (hash: xxxxxxx)
 
+🎯 BEADS (Layer 5):
+  [✅ N issues closed | 📋 N follow-ups created | Hoặc: "Chưa khởi tạo"]
+
+🧠 QDRANT (Layer 4):
+  [✅ N memories stored | Hoặc: "Chưa kết nối"]
+
 🔜 TASK TIẾP THEO:
-  → [Task ưu tiên cao nhất từ NEXT-TODO.md]
+  → [Task ưu tiên cao nhất từ Beads bd ready / NEXT-TODO.md]
 
 Gõ /start [task] để bắt đầu phiên mới!
 ```
