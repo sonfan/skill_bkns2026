@@ -93,138 +93,107 @@ description: "Brainstorm → Spec-driven planning: Ideation pipeline → Qdrant 
 
 ---
 
-### Step 2 — CREATE CHANGE FOLDER ⭐ (MỚI v5.0)
+### Step 2 — CREATE CHANGE FOLDER ⭐ (v6.2.1 BKNS-Unified)
 
-Tạo folder `changes/<feature-name>/` với 4 artifacts:
+> **v6.2.1**: Gộp `proposal.md` + `specs/spec.md` + `design.md` → 1 file `SPEC.md` chuẩn BKNS.
+
+#### Cấu trúc change folder:
 
 ```
 changes/<feature-name>/
-├── proposal.md      ← WHY: Business context, impact, scope
-├── specs/
-│   └── spec.md      ← WHAT: Requirements & scenarios
-├── design.md        ← HOW: Technical approach, architecture
-├── tasks.md         ← Implementation checklist (TDD bite-sized)
-└── delta-specs.md   ← Spec changes to merge into docs/ when done
+├── SPEC.md          ← BKNS Feature SPEC (gộp WHY + WHAT + HOW, 10 sections chuẩn)
+├── tasks.md         ← Implementation tasks (TDD bite-sized)
+└── delta-specs.md   ← Spec changes to merge vào docs/ khi done
 ```
 
-#### proposal.md
+> 💡 **Dự án MỚI** → `SPEC.md` ở root repo dùng Full SPEC (19 sections)
+> 💡 **Feature** → `changes/<name>/SPEC.md` dùng Feature SPEC (10 sections)
+> 💡 **Task nhỏ ≤ 2 files** → Mini-Spec inline, KHÔNG cần change folder
+> 📋 Template: `templates/SPEC.md` (3 tầng đầy đủ)
+
+#### SPEC.md (Feature SPEC — 10 sections bắt buộc)
 ```markdown
-# [Feature Name] — Proposal
+# SPEC — [Feature Name]
 
-## Problem / Opportunity
-[Mô tả vấn đề hoặc cơ hội business]
+> **Type**: Feature SPEC | **Version**: v1.0 | **Updated**: YYYY-MM-DD
+> **Trạng thái**: Draft → Reviewing → Approved → In Progress → Done
 
-## Proposed Solution
-[Giải pháp đã chọn (từ Step 1 approach selection)]
+## 1. Thông tin chung
+| Trường | Giá trị |
+|---|---|
+| Tên tính năng | [name] |
+| Mã task | [TASK-XXX] |
+| Người phụ trách | [dev] |
+| Mức ưu tiên | P0/P1/P2/P3 |
+| Size | S / M / L |
+| Breaking changes | Yes / No |
 
-## Impact & Scope
-- Files affected: [N] files
-- Size: S | M | L
-- Breaking changes: [yes/no — nếu yes, mô tả chi tiết]
+## 2. Bối cảnh và vấn đề
+[WHY — Vấn đề gì? Ảnh hưởng ai? Hậu quả?]
 
-## Dependencies
-- [Prerequisite tasks / services / migrations]
+## 3. Mục tiêu
+[Mục tiêu measurable + kết quả mong muốn]
 
-## Success Criteria
-- [ ] [Measurable criterion 1]
-- [ ] [Measurable criterion 2]
-```
+## 4. Phạm vi
+- **In scope**: [liệt kê]
+- **Out of scope**: [liệt kê]
 
-#### specs/spec.md
-```markdown
-# [Feature Name] — Requirements
+## 6. Business Flow
+[Numbered steps hoặc mermaid]
 
-## Functional Requirements
-1. [User CAN do X]
-2. [System MUST handle Y]
-3. [When Z happens, THEN W]
+## 7. Yêu cầu chức năng
+| Mã | Mô tả |
+|---|---|
+| FR-01 | [requirement] |
 
-## Scenarios
-### Happy Path
-1. [Step 1] → [Expected result]
-2. [Step 2] → [Expected result]
+## 10. Thiết kế dữ liệu (nếu có)
+[Tables, columns, migrations]
 
-### Edge Cases
-1. [Null input] → [Expected behavior]
-2. [Concurrent requests] → [Expected behavior]
+## 11. Thiết kế API (nếu có)
+| Method | Endpoint | Request | Response |
+|---|---|---|---|
 
-### Error Cases
-1. [Invalid data] → [Error response]
-2. [Permission denied] → [Error response]
-```
+## 15. Rủi ro
+| Rủi ro | Mitigation |
+|---|---|
 
-#### design.md
-```markdown
-# [Feature Name] — Technical Design
-
-## Architecture
-[Component diagram / data flow]
-
-## Files to Create/Modify
-[File tree với mô tả mỗi file]
-
-## Data Model
-[DB schema changes nếu có]
-
-## API Endpoints
-| Method | URL | Auth | Request | Response |
-|---|---|---|---|---|
-
-## Error Handling
-| Scenario | HTTP | Behavior |
+## 16. Tiêu chí nghiệm thu
+| Mã | Tiêu chí | Verify bằng |
 |---|---|---|
+| AC-01 | [criteria] | [test/curl/screenshot] |
 ```
 
-#### tasks.md (TDD bite-sized — từ Superpowers)
+> **Mapping format cũ → mới**:
+> `proposal.md` (WHY) → §1 + §2 + §3 + §4 + §15
+> `specs/spec.md` (WHAT) → §6 + §7 + §16
+> `design.md` (HOW) → §10 + §11 + optional sections
+
+#### tasks.md (TDD bite-sized — giữ nguyên format v5.0)
 ```markdown
 # [Feature Name] — Implementation Tasks
 
 > **REQUIRED**: Use /build with TDD (RED→GREEN→REFACTOR) for each task.
 
 ### Task 1: [Component Name] (2-5 min)
-
-**Files:**
-- Create: `path/to/file.py`
-- Test: `tests/path/test_file.py`
-
-**Step 1: Write failing test**
-[Exact test code]
-
-**Step 2: Run test — expect FAIL**
-Command: `pytest tests/path/test_file.py -v`
-Expected: FAIL "function not defined"
-
-**Step 3: Write minimal implementation**
-[Exact implementation code]
-
-**Step 4: Run test — expect PASS**
-Command: `pytest tests/path/test_file.py -v`
-Expected: PASS
-
-**Step 5: Commit**
-`git commit -m "feat: add [behavior] with test"`
-
-### Task 2: [Next Component] (2-5 min)
-[Same structure...]
+**Files:** Create: `path/to/file` | Test: `tests/path/test_file`
+**RED**: Write failing test → run → expect FAIL
+**GREEN**: Write minimal code → run → expect PASS
+**REFACTOR**: Clean up → run → still PASS
+**COMMIT**: `git commit -m "feat: add [behavior] with test"`
 ```
 
-#### delta-specs.md (từ OpenSpec)
+#### delta-specs.md (giữ nguyên format v5.0)
 ```markdown
 # [Feature Name] — Delta Specs
-
-## Changes to existing specs
 > These deltas will be merged into docs/ when this change is archived.
 
 ### docs/architecture.md
-- ADD: [New component/service description]
-- MODIFY: [Updated data flow]
-
-### docs/api-endpoints.md  
-- ADD: [New endpoint documentation]
+- ADD: [New component description]
 
 ### GEMINI.md
-- ADD: [New Architecture Rule if any]
+- ADD: [New rule if any]
 ```
+
 
 ---
 
@@ -252,11 +221,9 @@ bd dep add <task-2-id> <task-1-id>
 ```
 📋 CHANGE FOLDER đã tạo:
   changes/<feature-name>/
-  ├── proposal.md   (WHY)
-  ├── specs/spec.md (WHAT + Scenarios)
-  ├── design.md     (HOW)
-  ├── tasks.md      (N tasks, TDD bite-sized)
-  └── delta-specs.md (Merge when done)
+  ├── SPEC.md        (Feature SPEC — 10 sections BKNS)
+  ├── tasks.md       (N tasks, TDD bite-sized)
+  └── delta-specs.md (Merge vào docs/ khi done)
 
 📊 SPEC:
   Size: [S|M|L] | Files: [N] | Tasks: [N] | Tests: [N cases]

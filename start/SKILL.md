@@ -42,8 +42,12 @@ description: "Khởi động phiên làm việc toàn diện: load context, chec
 | `CHANGE_LOG.md` | Phiên trước: tóm tắt 1 dòng |
 | `NEXT-TODO.md` | Top 3 task ưu tiên |
 | `STATE.md` / `.gsd/STATE.md` | Phase/wave đang dở (nếu có) |
+| `PROJECT-META.md` | Owner, status, URLs (BKNS v6.2) |
+| `SPEC.md` | Yêu cầu nghiệp vụ tổng thể (BKNS v6.2) |
+| `DEPLOYMENT.md` | Deployment status (BKNS v6.2) |
 
 > Nếu file không tồn tại → bỏ qua, không báo lỗi.
+> 💡 Nếu thiếu file BKNS bắt buộc → gợi ý nhẹ: "⚠️ Thiếu [file] — xem Rule 14"
 
 ---
 
@@ -116,7 +120,7 @@ description: "Khởi động phiên làm việc toàn diện: load context, chec
 1. Scan thư mục changes/ (v5.0 — ưu tiên)
    NẾU TÌM THẤY changes/<name>/ folder:
    📋 "Change folder found: changes/<name>/"
-   → Hiển thị: proposal.md summary + tasks count
+   → Hiển thị: SPEC.md summary + tasks count
    → Suggest: "/build sẽ dùng change folder này"
 
 2. Scan thư mục .agent/commands/ (backward compat v4.x)
@@ -130,6 +134,15 @@ description: "Khởi động phiên làm việc toàn diện: load context, chec
 
 4. NẾU KHÔNG TÌM THẤY GÌ:
    📋 "Không có spec/blueprint. Bạn muốn /plan trước hay /build trực tiếp?"
+
+5. BKNS REPO COMPLIANCE (v6.2):
+   → Check files bắt buộc: README.md, SPEC.md, DEPLOYMENT.md, CHANGELOG.md, PROJECT-META.md, .env.example
+   NẾU THIẾU ≥ 1:
+     ⚠️ "BKNS Compliance: Thiếu [N] files bắt buộc — xem Rule 14"
+     → Liệt kê files thiếu
+     → Gợi ý: "/docs init để tạo từ template"
+   NẾU ĐẦY ĐỦ:
+     ✅ "BKNS Compliance: OK (6/6 files)"
 ```
 
 ---
@@ -187,6 +200,9 @@ Xuất báo cáo:
 
 📋 CHANGE FOLDER / BLUEPRINT
   [✅ Có: changes/<name>/ | ✅ Có: task-NNN.md | ❌ Chưa có — gợi ý /plan]
+
+📋 BKNS COMPLIANCE (v6.2)
+  [✅ OK (6/6) | ⚠️ Thiếu N files — xem Rule 14]
 
 🎯 SKILL ĐƯỢC CHỌN
   → /build [task]  (hoặc /fix, /craft, /quality, /integrate, /memory)

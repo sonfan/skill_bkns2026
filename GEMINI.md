@@ -1,8 +1,8 @@
-# GEMINI — Skill Repository v6.0 (Memory-First Architecture)
+# GEMINI — Skill Repository v6.2 (BKNS-Aligned + Memory-First Architecture)
 
 > **GitHub**: https://github.com/tampd/skill
 > **Local path**: /root/skill
-> **Cập nhật**: 2026-03-06 — **v6.1 SELF-REASONING GATE** (Memory-First Architecture)
+> **Cập nhật**: 2026-03-06 — **v6.2 BKNS-ALIGNED** (Memory-First Architecture + Company Standard)
 
 ---
 
@@ -42,7 +42,7 @@ SSH Key: SHA256:nTSlO07MbIplXX/j2FAHlyuSb+MJxPO1yboDHJJidFs
 
 ---
 
-## ⚠️ GLOBAL RULES (13 Rules)
+## ⚠️ GLOBAL RULES (14 Rules)
 
 ### Rule 1: AI PHẢI HỎI KHI CHƯA RÕ
 > 🛑 AI PHẢI HỎI user TRƯỚC KHI lập kế hoạch, viết code, ghi docs.
@@ -101,9 +101,27 @@ SSH Key: SHA256:nTSlO07MbIplXX/j2FAHlyuSb+MJxPO1yboDHJJidFs
 > → Nếu thay đổi ≤ 2 files, không breaking → tự thực thi + giải thích.
 > → Nếu thay đổi ≥ 3 files, hoặc có breaking/risky → PHẢI hỏi user trước.
 
+### Rule 14: BKNS REPO STANDARD (v6.2) 🆕
+> Mỗi repo BKNS **PHẢI** có đủ bộ docs tối thiểu:
+>
+> | File | Mục đích | Bắt buộc |
+> |---|---|---|
+> | `README.md` | Overview + Quick Start + Owner | ⭐ YES |
+> | `SPEC.md` | Yêu cầu nghiệp vụ (hoặc `changes/` khi đang dev) | ⭐ YES |
+> | `DEPLOYMENT.md` | Cách deploy, rollback, biến môi trường | ⭐ YES |
+> | `CHANGELOG.md` | Format Keep a Changelog `[Unreleased]`/`[x.y.z]` | ⭐ YES |
+> | `PROJECT-META.md` | Owner, backup, status, URLs, Jira | ⭐ YES |
+> | `.env.example` | Biến môi trường mẫu (KHÔNG chứa secret) | ⭐ YES |
+> | `docs/architecture.md` | Kiến trúc, data flow | Khi cần |
+> | `docs/api.md` | API endpoints | Khi có API |
+> | `docs/decisions.md` | Quyết định kỹ thuật (ADR) | Khi cần |
+>
+> **Templates**: Xem `templates/` trong skill repo.
+> **Naming**: `bkns-<tên>` | `bkns-internal-<tên>` | `bkns-api-<tên>`
+
 ---
 
-## 📁 CẤU TRÚC SKILL REPOSITORY v6.0
+## 📁 CẤU TRÚC SKILL REPOSITORY v6.2
 
 ```
 /root/skill/
@@ -129,6 +147,17 @@ SSH Key: SHA256:nTSlO07MbIplXX/j2FAHlyuSb+MJxPO1yboDHJJidFs
 ├── web-security/SKILL.md    ← /security [target]     OWASP deep audit
 ├── docs/SKILL.md            ← /docs [scope]          Documentation + ADR
 ├── seo/SKILL.md             ← /seo [topic]           SEO + GEO content
+│
+│── ─── BKNS TEMPLATES (v6.2) ───
+├── templates/               ← ⭐ BKNS repo templates
+│   ├── PROJECT-META.md      ← Owner + status + URLs
+│   ├── SPEC.md              ← Full (19 sections) + Mini-Spec
+│   ├── DEPLOYMENT.md        ← Deploy + rollback guide
+│   ├── README-BKNS.md       ← README chuẩn BKNS
+│   ├── CHANGELOG.md         ← Keep a Changelog format
+│   ├── WEEKLY-REPORT.md     ← Báo cáo tuần cho dev
+│   ├── PROJECT-AUDIT.md     ← Audit dự án 60 phút
+│   └── REPO-STRUCTURE.md    ← Cấu trúc thư mục chuẩn
 │
 │── ─── INFRASTRUCTURE ───
 ├── qdrant-memory/SKILL.md   ← Qdrant Layer 4 setup
@@ -215,19 +244,29 @@ TIER 3 — LOAD KHI /build:     changes/<feature>/specs/ (chỉ spec đang build
 
 ## 📚 DOCUMENTATION — ZERO OVERLAP
 
+### Skill System Files
 | File | Viết gì | KHÔNG viết gì |
 |---|---|---|
 | `GEMINI.md` | Tech stack, Rules (✅❌ code), Version | Tasks, logs, state |
 | `LESSONS.md` | Bug #WARN-XXX + ✅❌ code + quy tắc | Features, changelog |
-| `CHANGE_LOG.md` | Timeline: Added/Fixed/Changed/Removed | Tasks, rules |
 | `NEXT-TODO.md` | Task backlog (⬜🔄✅ tracking) | Tasks đã xong (XÓA) |
 | `ACTIVE_CONTEXT.md` | Working memory phiên hiện tại | Persistent info |
-| `docs/` | Architecture, business rules, API, setup | Task lists |
-| `changes/` | Spec-driven: proposal + specs + design + tasks | |
+| `changes/` | Spec-driven: SPEC.md + tasks + delta-specs | |
+
+### BKNS Repo Standard Files (v6.2)
+| File | Viết gì | KHÔNG viết gì |
+|---|---|---|
+| `README.md` | Overview, Quick Start, Owner, Doc links | Chi tiết kỹ thuật sâu |
+| `SPEC.md` | Yêu cầu nghiệp vụ, FR/NFR, acceptance criteria | Implementation details |
+| `DEPLOYMENT.md` | Deploy, rollback, env vars, health check | Business logic |
+| `CHANGELOG.md` | Keep a Changelog: Added/Changed/Fixed/Removed | Tasks, rules |
+| `PROJECT-META.md` | Owner, backup, status, URLs, Jira | Code, docs |
+| `.env.example` | Biến môi trường mẫu (KHÔNG secret) | Secret thật |
+| `docs/` | architecture, api, decisions, test-cases | Task lists |
 
 ---
 
-## 📋 CHEAT SHEET v6.0
+## 📋 CHEAT SHEET v6.2
 
 ```
 Bắt đầu phiên?           → /start [task]
@@ -248,6 +287,9 @@ Viết docs / handoff?      → /docs [scope]
 Viết bài SEO?             → /seo [topic]
 Lưu context giữa phiên?  → /checkpoint
 Kết thúc phiên?           → /save                 🔥 2-Stage Review
+Khởi tạo repo mới?       → /docs init             🆕 BKNS repo setup
+Báo cáo tuần?             → templates/WEEKLY-REPORT.md
+Audit dự án?              → templates/PROJECT-AUDIT.md
 ```
 
 ---
@@ -256,6 +298,7 @@ Kết thúc phiên?           → /save                 🔥 2-Stage Review
 
 | Date | Change |
 |---|---|
+| **2026-03-06** | **v6.2 BKNS-ALIGNED**: Rule 14 — BKNS Repo Standard. +8 templates (SPEC, DEPLOYMENT, PROJECT-META, README, CHANGELOG, WEEKLY-REPORT, PROJECT-AUDIT, REPO-STRUCTURE). Updated docs table. Skills aligned: start, plan, save, ship, docs. |
 | **2026-03-06** | **v6.1 SELF-REASONING GATE**: Rule 13 — 3-Question Self-Check trước MỌI quyết định. Embedded /build Step 1.5, /fix Phase 3, /craft Step 2.5, /plan Q2. Updated 13 Global Rules. README rewrite. |
 | **2026-03-05** | **v6.0 MEMORY-FIRST**: Gộp thông minh 18→14 skills. +3 merged skills (craft=design+frontend, quality=guard+perf+review, ship=new). Gộp brainstorm→plan (Ideation Step 0). Thêm Context Compression Protocol + 3-Tier Load Order vào memory. 12 Global Rules (thêm 9-12: A11y, Security Headers, Design Tokens, Perf Budget). Website Development Workflow. Zero-overlap documentation model. |
 | 2026-03-05 | v5.0 HYBRID UPGRADE: TDD Iron Law, Spec-Driven, 4-Phase Debug, 2-Stage Review. |

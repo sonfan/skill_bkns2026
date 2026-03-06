@@ -3,6 +3,39 @@
 ## 2026-03-06
 
 ### Added
+- **v6.2.1 UNIFIED SPEC STANDARD** — Chuẩn hóa quy trình viết SPEC theo BKNS
+  - Hệ thống SPEC 3 tầng thống nhất:
+    - **Full SPEC** (19 sections) → Dự án mới / Module lớn → `SPEC.md` ở root
+    - **Feature SPEC** (10 sections) → Feature ≥ 3 files → `changes/<name>/SPEC.md`
+    - **Mini-SPEC** (bảng 10 dòng) → Task ≤ 2 files → inline
+  - Section numbers đồng nhất 1-19 giữa các tầng cho tính kế thừa
+  - **Files thay đổi chi tiết** (cho rollback):
+
+  | Action | File | Mô tả |
+  |---|---|---|
+  | REWRITE | `templates/SPEC.md` | Thêm 3-tier system header, enriched Full SPEC, thêm Feature SPEC template, cập nhật Mini-Spec |
+  | REWRITE | `plan/SKILL.md` Step 2 | Change folder: gộp `proposal.md` + `specs/spec.md` + `design.md` → 1 file `SPEC.md` (Feature SPEC) |
+  | MODIFY | `build/SKILL.md` Step 0.5 | `.spec.md` (6 sections frontend) → BKNS SPEC reference (3 tầng) |
+  | MODIFY | `save/SKILL.md` Step 4 | Archive verify: thêm check SPEC.md trạng thái Done |
+  | MODIFY | `GEMINI.md` docs table | `changes/` description: "proposal + specs + design + tasks" → "SPEC.md + tasks + delta-specs" |
+  | MODIFY | `CHANGE_LOG.md` | Thêm entry v6.2.1 chi tiết cho rollback |
+
+  - **Files REMOVED từ change folder template**: `proposal.md`, `specs/spec.md`, `design.md`
+  - **Files GIỮA NGUYÊN trong change folder**: `tasks.md`, `delta-specs.md`
+  - **Rollback**: Revert commit chứa "feat(spec): unified SPEC standard v6.2.1"
+
+### Added
+- **v6.2 BKNS-ALIGNED** — Chuẩn hóa theo BKNS Dev Operating System Pack v2
+  - Rule 14: BKNS Repo Standard — 6 files bắt buộc + naming convention
+  - +8 templates: SPEC (19 sections + Mini-Spec), DEPLOYMENT (11 sections), PROJECT-META, README-BKNS, CHANGELOG (Keep a Changelog), WEEKLY-REPORT, PROJECT-AUDIT, REPO-STRUCTURE
+  - `/docs init bkns` — khởi tạo repo BKNS chuẩn từ templates
+  - `/start` — thêm BKNS compliance check (6 mandatory files)
+  - `/plan` — thêm BKNS SPEC template cho dự án mới
+  - `/save` — thêm DEPLOYMENT.md, PROJECT-META.md, SPEC.md vào docs update
+  - `/ship check` — thêm BKNS release checklist (10 items)
+  - Updated docs table (Skill System Files + BKNS Repo Standard Files)
+
+### Added
 - **v6.1 SELF-REASONING GATE** — Global Rule 13
   - 3-Question Self-Check trước MỌI quyết định thực thi
   - Q1: "Đây đã là phương án tốt nhất chưa?" (≥2 alternatives)

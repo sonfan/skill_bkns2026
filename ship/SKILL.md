@@ -95,6 +95,20 @@ const cspDirectives = {
 [ ] Analytics setup
 ```
 
+#### ✅ BKNS RELEASE CHECKLIST (v6.2) 🆕
+```
+[ ] CHANGELOG.md đã cập nhật (format Keep a Changelog)
+[ ] DEPLOYMENT.md đã cập nhật (deploy steps + rollback)
+[ ] PROJECT-META.md: Last Major Update cập nhật
+[ ] SPEC.md: requirements vẫn match implementation
+[ ] .env.example đã rà soát (không thiếu vars mới)
+[ ] Biến môi trường production đã rà soát
+[ ] Migration đã kiểm tra (up + down)
+[ ] Rollback plan đã có và documented
+[ ] Người phụ trách release đã được chỉ định
+[ ] PR có đủ: mục tiêu, link task, link SPEC, scope, cách test, rủi ro
+```
+
 ---
 
 ### Mode 2 — `/ship ci` (CI/CD Pipeline)

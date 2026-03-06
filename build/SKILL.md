@@ -68,20 +68,16 @@ NẾU không có blueprint:
 > ⭐ Vibe code CÓ CẤU TRÚC. Không code mà chưa có spec.
 > Skip nếu task nhỏ (fix/patch 1-2 files) hoặc project đã có spec.
 
-**TRƯỚC KHI CODE BẤT KỲ FILE NÀO**, tạo file `.spec.md`:
+**TRƯỚC KHI CODE BẤT KỲ FILE NÀO**, phải có SPEC theo chuẩn BKNS:
 
-```markdown
-# [Project/Module Name] — Architecture Spec
-
-## 1. Site Map (Routes/Pages)
-## 2. Component Tree
-## 3. Data Flow
-## 4. File Structure Convention
-## 5. Design Tokens
-## 6. Tech Decisions (mini-ADR)
+```
+Dự án mới / module core?  → Tạo SPEC.md (Full SPEC — 19 sections)
+Feature ≥ 3 files?        → Tạo changes/<feature>/SPEC.md (Feature SPEC — 10 sections)
+Task ≤ 2 files?           → Mini-Spec inline (10 dòng) hoặc Step 1 WHY/WHAT/HOW
 ```
 
-> 🛑 **RULE**: Module mới (≥ 3 files) mà CHƯA CÓ `.spec.md` → DỪNG và tạo trước.
+> 📋 Template: `templates/SPEC.md` (3 tầng đầy đủ)
+> 🛑 **RULE**: Module mới (≥ 3 files) mà CHƯA CÓ SPEC → DỪNG và tạo trước.
 
 ---
 

@@ -15,10 +15,30 @@ description: "Quy trình tạo và duy trì documentation hoàn chỉnh: scan th
 | Tình huống | Dùng /docs? |
 |---|---|
 | Dự án mới cần docs từ đầu | ✅ `/docs init` |
+| **Khởi tạo repo BKNS chuẩn** | ✅ `/docs init bkns` 🆕 v6.2 |
 | Sau khi ship feature lớn, docs bị outdated | ✅ `/docs update` |
 | Chuẩn bị handoff cho dev/AI mới | ✅ `/docs handoff` |
 | Cần ghi lại quyết định kiến trúc quan trọng | ✅ `/docs adr [decision]` |
 | Fix bug nhỏ | ❌ → `/fix` |
+
+### `/docs init bkns` — Khởi tạo repo BKNS chuẩn (v6.2) 🆕
+
+```
+Tạo toàn bộ files bắt buộc từ templates:
+1. Copy templates/README-BKNS.md    → README.md
+2. Copy templates/SPEC.md           → SPEC.md
+3. Copy templates/DEPLOYMENT.md     → DEPLOYMENT.md
+4. Copy templates/CHANGELOG.md      → CHANGELOG.md
+5. Copy templates/PROJECT-META.md   → PROJECT-META.md
+6. Tạo .env.example (nếu chưa có)
+7. Tạo docs/ directory + architecture.md, api.md, decisions.md
+8. Tạo .gitignore (nếu chưa có)
+9. Điền thông tin cơ bản (hỏi user: project name, owner, tech stack)
+10. Hiển thị checklist BKNS compliance: ✅ 6/6 files
+
+→ Xem cấu trúc đầy đủ: templates/REPO-STRUCTURE.md
+→ Rule 14 trong GEMINI.md
+```
 
 ---
 

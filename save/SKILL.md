@@ -33,7 +33,7 @@ Liệt kê files thay đổi, nhóm theo module.
 Kiểm tra code với spec/proposal (nếu có change folder):
 
 1. CODE ĐÚng SPEC?
-   - Tất cả requirements trong specs/spec.md đã implement?
+   - Tất cả requirements trong SPEC.md đã implement?
    - Scenarios trong spec đã handle?
 
 2. CODE THỪA?
@@ -109,7 +109,7 @@ NẾU CÓ → Ghi vào LESSONS.md:
 
 ```
 1. NẾU có change folder (changes/<feature>/):
-   a. Verify: tất cả tasks trong tasks.md đã ✅?
+   a. Verify: SPEC.md có trạng thái Done + tất cả tasks trong tasks.md đã ✅?
       ✅ → tiếp tục archive
       ❌ → cảnh báo: "Còn N tasks chưa done. Archive anyway?"
 
@@ -138,6 +138,9 @@ NẾU CÓ → Ghi vào LESSONS.md:
 | `NEXT-TODO.md` | XÓA task đã hoàn thành |
 | `GEMINI.md` | Cập nhật version, status |
 | `STATE.md` | Cập nhật phase/wave (nếu có) |
+| `DEPLOYMENT.md` | Cập nhật nếu deploy process thay đổi (BKNS v6.2) |
+| `PROJECT-META.md` | Cập nhật Last Major Update (BKNS v6.2) |
+| `SPEC.md` | Cập nhật nếu business requirements thay đổi (BKNS v6.2) |
 
 ---
 
