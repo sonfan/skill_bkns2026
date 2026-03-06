@@ -2,7 +2,7 @@
 
 > **GitHub**: https://github.com/tampd/skill
 > **Local path**: /root/skill
-> **Cập nhật**: 2026-03-05 — **v6.0 MEMORY-FIRST ARCHITECTURE**
+> **Cập nhật**: 2026-03-06 — **v6.1 SELF-REASONING GATE** (Memory-First Architecture)
 
 ---
 
@@ -256,6 +256,7 @@ Kết thúc phiên?           → /save                 🔥 2-Stage Review
 
 | Date | Change |
 |---|---|
+| **2026-03-06** | **v6.1 SELF-REASONING GATE**: Rule 13 — 3-Question Self-Check trước MỌI quyết định. Embedded /build Step 1.5, /fix Phase 3, /craft Step 2.5, /plan Q2. Updated 13 Global Rules. README rewrite. |
 | **2026-03-05** | **v6.0 MEMORY-FIRST**: Gộp thông minh 18→14 skills. +3 merged skills (craft=design+frontend, quality=guard+perf+review, ship=new). Gộp brainstorm→plan (Ideation Step 0). Thêm Context Compression Protocol + 3-Tier Load Order vào memory. 12 Global Rules (thêm 9-12: A11y, Security Headers, Design Tokens, Perf Budget). Website Development Workflow. Zero-overlap documentation model. |
 | 2026-03-05 | v5.0 HYBRID UPGRADE: TDD Iron Law, Spec-Driven, 4-Phase Debug, 2-Stage Review. |
 | 2026-03-04 | v4.1 HYBRID MEMORY: Beads + Qdrant 5-Layer Memory. |
