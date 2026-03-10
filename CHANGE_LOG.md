@@ -3,6 +3,23 @@
 ## 2026-03-10
 
 ### Changed
+- **APEX v3.0 Memory** — 4-Layer Smart Retrieval upgrade
+  - Layer A (Rules): GEMINI.md + STATE.md — luôn đọc
+  - Layer B (Critical Lessons): LESSONS.md giới hạn ≤10 entries (importance ≥0.8)
+  - Layer C (Semantic): Qdrant Vector DB — semantic search, cross-project
+  - Layer D (Auto-Memory): .ai/memory/MEMORY.md — AI tự ghi (200-line rule)
+  - LESSONS_ARCHIVE.md: lưu lessons importance < 0.8 (Qdrant searchable)
+  - `/start`: 4-layer smart load (static + Qdrant + auto-memory)
+  - `/save`: embed lessons mới vào Qdrant + auto-memory update
+  - `/fix`: Qdrant semantic match cho error patterns
+  - `/build`: Qdrant search trong MEMORY LOAD step
+  - `/learn`: STORE+EMBED + auto-archive khi >10 entries
+  - Templates mới: `MEMORY.md`, `LESSONS_ARCHIVE.md`
+  - Research-based: Claude Code MEMORY.md, Cursor context layering, ReMe, MemOS
+
+## 2026-03-10
+
+### Changed
 - **APEX v2.0** — Full system upgrade from AG-SKILL v2.0 to APEX v2.0
   - 6-Layer Memory Architecture (+Layer 0 Ingest, +Layer 5 Consolidation)
   - 35 commands (up from 32): +`/consolidate`, `/cross-link`, `/recall`

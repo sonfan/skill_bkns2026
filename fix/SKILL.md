@@ -9,10 +9,13 @@ description: Bug fixing and debugging. Use for /fix (debug any error), error tra
 > Tìm root cause trước khi fix — không patch symptoms
 
 ```
-PHASE 0 — MEMORY MATCH (10 giây)
+PHASE 0 — MEMORY MATCH (v3.0 Smart Retrieval)
   □ Check INSTINCTS.md: đã gặp error pattern này chưa?
   □ Nếu có instinct match (confidence ≥0.7) → apply và log
-  □ Check LESSONS.md: search entities/topics liên quan
+  □ Check LESSONS.md: critical entries (importance ≥0.8) liên quan
+  □ Qdrant (nếu available): qdrant_find("error: [mô tả lỗi]")
+     → Trả về top-3 relevant fixes từ TẤT CẢ projects
+     → "🧠 Qdrant found: đã fix lỗi tương tự ở [project]!"
   □ Check INSIGHTS.md: có compound insight nào liên quan?
      → Nếu có: "💡 INSIGHT liên quan: [tóm tắt]"
   □ Nếu không match → tiếp tục 4-phase debug
@@ -56,8 +59,11 @@ PHASE 4 — VERIFY + LEARN (APEX Enhanced)
   AUTO-INGEST:
   □ Tự động chạy Ingest tagging:
      Summary, Entities, Topics, Importance score
-  □ "📝 Ghi bài học này vào LESSONS.md không?"
-  □ Nếu có: format APEX entry + check connections
+  □ Importance ≥ 0.8 → LESSONS.md (critical)
+     Importance < 0.8 → LESSONS_ARCHIVE.md
+  □ Qdrant (nếu available): qdrant_store(lesson, metadata)
+     → Tự động embed vào project collection + global_patterns
+  □ Auto-memory: ghi debugging insight vào .ai/memory/MEMORY.md
   □ "🔗 Tìm thấy connection với #BUG-XXX, #BUG-YYY"
   □ "/consolidate khi nào? Đã có [N] lessons mới."
 ```

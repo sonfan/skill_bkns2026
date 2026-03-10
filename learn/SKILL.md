@@ -50,8 +50,8 @@ BƯỚC 3 — CROSS-LINK CHECK
   → "🔗 Tìm thấy connection với: #BUG-003 (same entities), #BUG-008"
   → Update Connected field cho các entries liên quan
 
-BƯỚC 4 — STORE
-  LESSONS.md: APEX format entry:
+BƯỚC 4 — STORE + EMBED
+  LESSONS.md: APEX format entry (nếu importance ≥ 0.8):
     ### #BUG-[SỐ] [Tiêu đề ngắn]
     - **Ngày:** YYYY-MM-DD
     - **Importance:** [score] | [emoji level]
@@ -64,7 +64,20 @@ BƯỚC 4 — STORE
     - **Connected:** #BUG-XXX, #INS-YYY
     - **File liên quan:** [paths]
 
+  LESSONS_ARCHIVE.md: nếu importance < 0.8
+
   INSTINCTS.md: nếu là pattern (confidence: 0.5 mới)
+
+  Qdrant (nếu available): qdrant_store(lesson, {
+    project, date, tags, type, importance, reference
+  }) → embed vào project collection + global_patterns
+
+  Auto-memory: ghi note vào .ai/memory/MEMORY.md
+
+  ARCHIVE CHECK:
+  → Nếu LESSONS.md > 10 entries:
+     Di chuyển entries importance thấp nhất sang LESSONS_ARCHIVE.md
+     Embed vào Qdrant trước khi archive
 
 BƯỚC 5 — CONSOLIDATE TRIGGER
   → Đếm lessons kể từ /consolidate cuối
@@ -85,7 +98,8 @@ Khi nào chạy:
 PROCESS:
 
   BƯỚC 1 — SCAN
-    Đọc toàn bộ LESSONS.md + INSTINCTS.md
+    Đọc LESSONS.md (critical) + LESSONS_ARCHIVE.md + INSTINCTS.md
+    Qdrant (nếu available): qdrant_find("recent lessons") → pull related
     Đếm entries chưa được consolidate
 
   BƯỚC 2 — CLUSTER

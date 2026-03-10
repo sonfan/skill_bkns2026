@@ -52,7 +52,8 @@ SEARCH PROTOCOL — 4 Steps:
 
   1. INTERNAL SEARCH (codebase + memory):
      □ grep -r "[keyword]" --include="*.ts" .
-     □ Check LESSONS.md: đã giải quyết vấn đề tương tự?
+     □ Check LESSONS.md: critical entries liên quan?
+     □ Qdrant (nếu available): qdrant_find("[search context]")
      □ Check INSTINCTS.md: có pattern liên quan?
      □ Check INSIGHTS.md: compound insight nào relevant?
 
@@ -82,12 +83,15 @@ SEARCH PROTOCOL — 4 Steps:
 > Implement feature với APEX 7-Step Build Protocol
 
 ```
-BƯỚC 0 — MEMORY LOAD (KHÔNG SKIP)
+BƯỚC 0 — MEMORY LOAD (v3.0 Smart Retrieval)
   □ Đọc ACTIVE_CONTEXT.md → snapshot hiện tại
   □ Check INSTINCTS: có instinct confidence ≥0.7 liên quan không?
      → Nếu có: "🧠 Applying INS-XXX: [pattern]"
-  □ Scan LESSONS.md: từ khóa liên quan task
-     → Nếu có: "⚠️ Bài học liên quan: #BUG-XXX [importance]"
+  □ LESSONS.md: đọc critical entries (≤10, importance ≥0.8)
+  □ Qdrant (nếu available): qdrant_find("[task keywords]")
+     → Trả về top-3 relevant lessons/patterns
+     → "🧠 Qdrant found: [N] related patterns"
+  □ Auto-memory: check .ai/memory/MEMORY.md cho context liên quan
   □ Check INSIGHTS.md: compound insight nào relevant?
   🛑 STOP: Nếu chưa hoàn thành Bước 0, KHÔNG code.
 

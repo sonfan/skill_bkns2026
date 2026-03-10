@@ -3,31 +3,39 @@ name: session
 description: Session lifecycle management. Use for /start (begin session), /save (end session), /checkpoint (save mid-session), /review (multi-perspective code review), /recall (quick resume). Triggers on "bắt đầu phiên", "kết thúc phiên", "lưu context", "review code", "start session", "save session", "recall", "resume".
 ---
 
-# Session Skill — 6-Layer Bootstrap + Consolidation Save + Quality Gate
+# Session Skill — 4-Layer Smart Retrieval + Consolidation Save + Quality Gate
 
 ## /start [task]
-> Khởi động phiên làm việc, load 6-Layer memory, set context
+> Khởi động phiên làm việc, load 4-Layer smart memory, set context
 
 ```
-APEX Bootstrap Protocol:
+APEX v3.0 Bootstrap Protocol:
 
-LAYER 1 — Check ACTIVE_CONTEXT.md:
+LAYER 0 — CHECK ACTIVE_CONTEXT.md:
   → Có: hiển thị "📍 Đang làm: [task] | Files: [X] | Tiếp theo: [Y]"
          → /recall ngay, không cần đọc thêm
   → Không: tiếp tục bình thường
 
-LAYER 2 — Load Semantic:
+LAYER A — RULES (luôn đọc):
   □ Đọc GEMINI.md: tech stack, rules hiện tại
   □ Đọc STATE.md: phase, wave, blockers
 
-LAYER 3 — Scan Episodic:
-  □ LESSONS.md: top-5 entries by importance score liên quan đến task
-  □ CHANGELOG.md: 3 thay đổi gần nhất
+LAYER B — CRITICAL LESSONS (luôn đọc, ≤10 entries):
+  □ Đọc LESSONS.md: chỉ entries importance ≥ 0.8
+  □ Nếu cần sâu hơn → đọc LESSONS_ARCHIVE.md (on-demand)
 
-LAYER 4 — Load Instincts:
+LAYER C — SEMANTIC SEARCH (Qdrant):
+  □ Nếu Qdrant available: qdrant_find("[task context]")
+     → Trả về top-5 lessons/insights liên quan nhất
+     → "🧠 Qdrant nhớ: [N] pattern liên quan"
+  □ Nếu Qdrant chưa setup: skip (fallback Layer B)
+
+LAYER D — AUTO-MEMORY:
+  □ Đọc .ai/memory/MEMORY.md (chỉ 200 dòng đầu)
+  □ Nếu có topic files liên quan → đọc on-demand
+
+INSTINCTS + INSIGHTS:
   □ INSTINCTS.md: top-3 instincts liên quan (confidence ≥ 0.7)
-
-LAYER 5 — Check Insights:
   □ INSIGHTS.md: có compound insight nào liên quan task không?
   □ Nếu có: alert ngay "💡 INSIGHT liên quan: [tóm tắt]"
 
@@ -46,12 +54,14 @@ ANTIGRAVITY PLAN:
 
 OUTPUT FORMAT:
 ═══════════════════════════════════════
-🚀 APEX SESSION START
+🚀 APEX SESSION START (v3.0)
 ═══════════════════════════════════════
 📍 Task: [task nếu có]
 🏗️ Phase: [X] | Wave: [Y]
-⚠️ Lessons cần nhớ:
+⚠️ Critical Lessons (Layer B):
   - #BUG-007 [0.8] — [tóm tắt 1 dòng]
+🧠 Qdrant Relevant (Layer C):
+  - [lesson/pattern liên quan từ Qdrant]
 🧠 Instincts active:
   - INS-003 [0.85] — [pattern]
 💡 Insights: [tóm tắt nếu có]
@@ -87,6 +97,7 @@ OUTPUT FORMAT:
     - NEXT IMMEDIATE ACTION: đủ cụ thể để AI tiếp tục ngay
 □ Chạy VERIFICATION LOOP nhanh:
     lint → type-check → test (nếu applicable)
+□ AUTO-MEMORY: ghi insights phiên này vào .ai/memory/MEMORY.md
 □ Ghi timestamp
 □ Output: "✅ Checkpoint #N lưu thành công lúc HH:MM"
 ```
@@ -110,24 +121,36 @@ STEP 2 — VERIFICATION LOOP (bắt buộc)
 STEP 3 — EXTRACT LEARNINGS + INGEST
   □ Trong phiên này, gặp vấn đề gì?
   □ Giải pháp nào hiệu quả? Cái nào không?
-  □ Append vào LESSONS.md (APEX format: Importance + Entities + Topics + Connected)
+  □ Đánh giá Importance Score:
+     ≥ 0.8 → Append vào LESSONS.md (APEX format)
+     < 0.8 → Append vào LESSONS_ARCHIVE.md
   □ Never overwrite existing entries
+  □ ARCHIVE CHECK: nếu LESSONS.md > 10 entries →
+     di chuyển entries thấp nhất (importance < 0.8) sang LESSONS_ARCHIVE.md
 
-STEP 4 — CONSOLIDATION CHECK
+STEP 4 — QDRANT EMBED (nếu available)
+  □ qdrant_store: embed TẤT CẢ lessons mới (cả critical và archived)
+  □ Metadata: { project, date, tags, type, importance, reference }
+  □ Nếu Qdrant chưa setup: skip, ghi vào LESSONS_ARCHIVE.md làm fallback
+
+STEP 5 — CONSOLIDATION CHECK
   □ Đếm LESSONS entries kể từ /consolidate cuối
   □ Nếu ≥3: tự động chạy /consolidate trước khi save
   □ INSIGHTS.md được update
 
-STEP 5 — UPDATE INSTINCTS
+STEP 6 — UPDATE INSTINCTS
   □ Pattern nào được confirm? → confidence += 0.1
   □ Pattern nào sai? → confidence -= 0.2 + thêm counter-example
   □ Pattern mới nào xuất hiện? → thêm vào INSTINCTS.md (confidence: 0.5)
 
-STEP 6 — UPDATE STATE
+STEP 7 — AUTO-MEMORY UPDATE
+  □ Ghi debugging insights, gotchas vào .ai/memory/MEMORY.md
+  □ Nếu MEMORY.md > 200 dòng → tách topic files
+  □ AI tự quyết nội dung (user không cần review)
+
+STEP 8 — UPDATE STATE + CLEANUP
   □ Merge ACTIVE_CONTEXT quan trọng → STATE.md
   □ Cập nhật CHANGELOG.md: những gì đã thay đổi
-
-STEP 7 — CLEANUP & PUSH
   □ Archive ACTIVE_CONTEXT.md (timestamp) → Xóa ACTIVE_CONTEXT.md
   □ README sync check (có cần update không?)
   □ git push (MANDATORY — không xong = không "done")

@@ -1,13 +1,15 @@
-# APEX SKILL SYSTEM v2.0 — Global Rules
+# APEX SKILL SYSTEM v3.0 — Global Rules
 > Applied to ALL sessions in this project. Read before every task.
 > Triết lý: AI không bao giờ quên. Mỗi phiên đều học hỏi và kết nối với quá khứ.
 
 ## MEMORY FILES (read at session start)
-- `LESSONS.md` — bài học từ quá khứ (append-only, APEX format)
+- `LESSONS.md` — **critical-only** bài học (≤10 entries, importance ≥0.8). Luôn đọc.
+- `LESSONS_ARCHIVE.md` — archived lessons (importance <0.8 hoặc entries cũ). Chỉ đọc khi cần.
 - `INSTINCTS.md` — patterns đã học + confidence score (0.0–1.0)
 - `STATE.md` — project state hiện tại (phase, wave, blockers)
 - `ACTIVE_CONTEXT.md` — working memory phiên này (xóa sau /save)
 - `INSIGHTS.md` — compound insights từ /consolidate (auto-generated)
+- `.ai/memory/MEMORY.md` — **auto-memory**: AI tự ghi notes giữa phiên (≤200 dòng index)
 
 ---
 
@@ -74,34 +76,53 @@ Stitch MCP           → /craft setup → generate screens → edit screens → 
 
 ---
 
-## 🧠 MEMORY ARCHITECTURE (6 Layers — APEX Enhanced)
+## 🧠 MEMORY ARCHITECTURE v3.0 — 4-Layer Smart Retrieval
+
+> Triết lý: Không đọc hết, chỉ đọc đúng. Tối ưu context window.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  LAYER 0 — INGEST                                           │
-│  Auto-tag mọi input: Entity + Topic + Importance (0.0–1.0)  │
+│  LAYER A — RULES (tĩnh, user kiểm soát, luôn đọc)          │
+│  Files: GEMINI.md, STATE.md                                  │
+│  Nội dung: Tech stack, conventions, rules, project state     │
+│  Đặc điểm: Git-tracked, human-editable                       │
 ├─────────────────────────────────────────────────────────────┤
-│  LAYER 1 — WORKING       → ACTIVE_CONTEXT.md                │
-│  Task hiện tại, files đang sửa, decisions phiên này         │
+│  LAYER B — CRITICAL LESSONS (tĩnh, ≤10 entries, luôn đọc)   │
+│  File: LESSONS.md (chỉ importance ≥ 0.8)                     │
+│  Archive: LESSONS_ARCHIVE.md (importance < 0.8 hoặc cũ)      │
+│  Đặc điểm: Luôn đọc mỗi /start, ngắn gọn, git-tracked      │
 ├─────────────────────────────────────────────────────────────┤
-│  LAYER 2 — SEMANTIC      → GEMINI.md, STATE.md              │
-│  Tech stack, rules, phase/wave, project brain                │
+│  LAYER C — SEMANTIC MEMORY (Qdrant, search theo nghĩa)      │
+│  Engine: Qdrant Vector DB (MCP: qdrant_find / qdrant_store)  │
+│  Nội dung: TẤT CẢ lessons + insights + patterns              │
+│  Truy xuất: /start search top-5 relevant theo task context   │
+│  Đặc điểm: Cross-project, scale vô hạn, semantic search     │
 ├─────────────────────────────────────────────────────────────┤
-│  LAYER 3 — EPISODIC      → LESSONS.md, CHANGELOG.md         │
-│  Bugs, bài học, timeline (append-only)                       │
-├─────────────────────────────────────────────────────────────┤
-│  LAYER 4 — INSTINCT      → INSTINCTS.md                     │
-│  Learned patterns + confidence score (0.0–1.0)               │
-├─────────────────────────────────────────────────────────────┤
-│  LAYER 5 — CONSOLIDATION → INSIGHTS.md                       │
-│  Cross-memory connections, compound insights                  │
-│  Trigger: /save auto hoặc /consolidate manual                │
+│  LAYER D — AUTO-MEMORY (AI tự viết, local)                  │
+│  File: .ai/memory/MEMORY.md (≤200 dòng) + topic files        │
+│  Nội dung: Debugging insights, gotchas, project-specific      │
+│  Đặc điểm: AI tự ghi, machine-local, không git               │
+│  200-line rule: quá dài → tách thành topic files              │
 └─────────────────────────────────────────────────────────────┘
+```
+
+### /start Smart Load Flow
+```
+1. RULES:    Đọc GEMINI.md + STATE.md                    ← Layer A
+2. CRITICAL: Đọc LESSONS.md (≤10 entries, ≥0.8)          ← Layer B
+3. SEMANTIC: qdrant_find(task context) → top 5 relevant  ← Layer C
+4. AUTO:     Đọc .ai/memory/MEMORY.md (≤200 dòng)        ← Layer D
+5. INSTINCT: INSTINCTS.md (top-3, confidence ≥0.7)       
+6. INSIGHT:  INSIGHTS.md (nếu có liên quan)
+→ Tổng: ~15-20 entries MAX thay vì ALL entries
 ```
 
 ### Importance Score (áp dụng cho LESSONS entries)
 
 ```
+≥0.8 — Giữ trong LESSONS.md (critical, luôn đọc)
+<0.8 — Archive sang LESSONS_ARCHIVE.md (Qdrant search khi cần)
+
 1.0 — Security vulnerability, data loss risk
 0.8 — 🔴 Critical: breaks production, major UX failure
 0.6 — 🟡 Warning: blocks feature, performance hit
@@ -188,13 +209,15 @@ Kết thúc phiên?           → /save                    (auto /consolidate)
 
 | File | Layer | Viết gì | KHÔNG viết gì |
 |---|---|---|---|
-| `GEMINI.md` | Semantic (L2) | Tech stack, Rules, Skill map | Tasks, logs, state |
-| `STATE.md` | Semantic (L2) | Phase, wave, blockers, next milestones | History |
-| `LESSONS.md` | Episodic (L3) | Bug + bài học + Importance + Connected | Features, changelog |
-| `CHANGELOG.md` | Episodic (L3) | Timeline thay đổi theo ngày | Tasks, lessons |
-| `INSTINCTS.md` | Instinct (L4) | Learned patterns + confidence 0.0–1.0 | Bug reports |
-| `INSIGHTS.md` | Consolidation (L5) | Cross-memory connections, compound insights | Raw data |
-| `ACTIVE_CONTEXT.md` | Working (L1) | Working memory phiên hiện tại | Persistent info |
+| `GEMINI.md` | A — Rules | Tech stack, Rules, Skill map | Tasks, logs, state |
+| `STATE.md` | A — Rules | Phase, wave, blockers, next milestones | History |
+| `LESSONS.md` | B — Critical | **Chỉ** lessons importance ≥0.8, ≤10 entries | Low-priority lessons |
+| `LESSONS_ARCHIVE.md` | B → C | Lessons importance <0.8 hoặc cũ (Qdrant searchable) | Critical lessons |
+| `CHANGELOG.md` | A — Rules | Timeline thay đổi theo ngày | Tasks, lessons |
+| `INSTINCTS.md` | A — Rules | Learned patterns + confidence 0.0–1.0 | Bug reports |
+| `INSIGHTS.md` | C — Semantic | Cross-memory connections, compound insights | Raw data |
+| `.ai/memory/MEMORY.md` | D — Auto | AI notes: debugging, gotchas, ≤200 dòng | User rules |
+| `ACTIVE_CONTEXT.md` | D — Auto | Working memory phiên hiện tại | Persistent info |
 
 ---
 
@@ -202,6 +225,7 @@ Kết thúc phiên?           → /save                    (auto /consolidate)
 
 | Date | Change |
 |---|---|
-| **2026-03-10** | **APEX v2.0**: 6-Layer Memory (+ Ingest L0 + Consolidation L5), 35 commands (+ /consolidate, /cross-link, /recall), Importance scoring, INSIGHTS.md, auto-Ingest tagging, sleep-brain consolidation, combo skills table. Synthesized from AG-SKILL v2.0 + Google ADK memory-agent + APEX v1.0 draft. |
+| **2026-03-10** | **APEX v3.0 Memory**: 4-Layer Smart Retrieval (Rules + Critical Lessons + Qdrant Semantic + Auto-Memory). LESSONS.md critical-only (≤10, ≥0.8). LESSONS_ARCHIVE.md for lower-priority. Auto-Memory (.ai/memory/MEMORY.md, 200-line rule). Qdrant search in /start, /build, /fix. Research-based: Claude Code MEMORY.md, Cursor context layering, ReMe, MemOS patterns. |
+| 2026-03-10 | **APEX v2.0**: 6-Layer Memory, 35 commands, Importance scoring, INSIGHTS.md, consolidation. Synthesized from AG-SKILL v2.0 + Google ADK memory-agent + APEX v1.0 draft. |
 | 2026-03-10 | v2.0: 20 rules, 9 skills, 32 commands. Research-based: ECC + 12 GitHub repos. |
 | 2026-03-09 | v1.0 LAUNCH: 9 skills, 17 rules, ECC-inspired. |

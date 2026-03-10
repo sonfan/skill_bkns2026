@@ -2,6 +2,8 @@
 
 > **Mục đích**: Ghi nhận bugs, bài học, quy tắc rút ra. KHÔNG BAO GIỜ xóa entries.
 > **Format**: #BUG-NNN / #WARN-NNN — APEX format với Importance + Entities + Topics + Connected.
+> **⚠️ CRITICAL-ONLY POLICY (v3.0)**: File này chỉ chứa **≤10 entries** có **importance ≥ 0.8**.
+> Entries importance < 0.8 → `LESSONS_ARCHIVE.md`. Tất cả đều được embed vào Qdrant.
 
 ---
 
