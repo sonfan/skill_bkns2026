@@ -1,49 +1,43 @@
-# AG-SKILL — Antigravity Skill System v2.0
+# AG-SKILL — APEX Skill System v2.0
 
-> **The best of [everything-claude-code](https://github.com/affaan-m/everything-claude-code) + Skill v7.0 + 12 top repos, optimized for Google Antigravity.**
+> 🧠 **AI không bao giờ quên.** Mỗi phiên đều học hỏi và kết nối với quá khứ.
 
-```
-"FEWER SKILLS. DEEPER MODES. SMARTER LEARNING. ZERO COMPROMISE."
-```
+**APEX**: Adaptive Pattern EXtraction — hệ thống skill tối ưu cho AI coding assistant.
 
-## ✨ What's New (v2.0)
+## ✨ What's New (APEX v2.0)
 
-- **32 commands** across 9 skills (up from 22)
-- **20 Global Rules** grouped by category (Core, Architecture, Code Quality, Verification, Design, Standards)
-- **Context Engineering** — strategic loading, compression, optimization
-- **Platform Design Rules** — 300+ design values (spacing, typography, color, animation)
-- **MCP Tool Design** — `/mcp` mode for building N8N + Antigravity tools
-- **Content Pipeline** — `/brief` → `/article` → `/audit-content` complete workflow
-- **Component Docs** — `/apidoc` + `/componentdoc` specialized documentation
-- **Instinct Evolution** — `/evolve` cluster instincts → skill sections
-- **Browser Testing** — `/e2e` Antigravity browser sub-agent verification
-- **Security Hardening** — `/harden` separate from audit
-- **Bug Classification** — CRITICAL/HIGH/MEDIUM/LOW with action guide
-- **Common Debug Patterns** — React/Node/N8N/WordPress quick diagnosis
+- **6-Layer Memory Architecture** — +Ingest Layer (auto-tagging) + Consolidation Layer (cross-memory insights)
+- **35 commands** across 9 skills (lên từ 32)
+- **New commands**: `/consolidate` (sleep-brain pass), `/cross-link` (manual connections), `/recall` (quick resume)
+- **Importance Scoring** — 0.0–1.0 cho mọi LESSONS entry
+- **INSIGHTS.md** — compound insights từ memory consolidation
+- **Auto-Ingest** — tự động tag Entity/Topic/Importance khi learn
+- **Combo Skills** — workflow templates cho common scenarios
+- Synthesized from: AG-SKILL v2.0 + Google ADK memory-agent + 12 top GitHub repos
 
-## 📦 9 Skills — 32 Commands
+## 📦 9 Skills — 35 Commands
 
 | # | Skill | Commands | Purpose |
 |---|---|---|---|
-| 1 | **session** | `/start` `/save` `/checkpoint` `/review` | 🔄 Lifecycle + Quality Gate + Multi-perspective Review |
-| 2 | **build** ⭐ | `/build` `/plan` `/search` | 🔥 Search-First + TDD + Cleanup Pass |
-| 3 | **fix** | `/fix` | 🐛 4-Phase Debug + Instinct Matching |
-| 4 | **craft** | `/craft` `/audit` `/tokens` `/e2e` | 🎨 UI + Design Tokens + WCAG + Browser Testing |
-| 5 | **secure** | `/security` `/harden` `/ship` | 🔒 OWASP + Hardening + Production Readiness |
-| 6 | **automate** | `/n8n` `/integrate` `/mcp` | ⚡ N8N + API Design + MCP Tool Design |
-| 7 | **content** | `/seo` `/article` `/brief` `/audit-content` | 📝 SEO Pipeline + Content Engine |
-| 8 | **spec** ⭐ | `/spec` `/handoff` `/adr` `/runbook` `/apidoc` `/componentdoc` | 📋 Ultra Docs (15+15+7 sections) |
-| 9 | **learn** | `/learn` `/instinct` `/evolve` `/review-instincts` | 🧠 Continuous Learning + Instincts |
+| 1 | **session** | `/start` `/save` `/checkpoint` `/review` `/recall` | 6-Layer Bootstrap + Consolidation Save |
+| 2 | **build** ⭐ | `/build` `/plan` `/search` | Search-First + TDD + Memory-Enhanced |
+| 3 | **fix** | `/fix` | 4-Phase Debug + Insight Match + Auto-Ingest |
+| 4 | **craft** | `/craft` `/audit` `/tokens` `/e2e` | UI + Design Tokens + WCAG + Browser |
+| 5 | **secure** | `/security` `/harden` `/ship` | OWASP + Hardening + Production |
+| 6 | **automate** | `/n8n` `/integrate` `/mcp` | N8N + API + MCP Tool Design |
+| 7 | **content** | `/seo` `/article` `/brief` `/audit-content` | SEO Pipeline + Content Engine |
+| 8 | **spec** ⭐ | `/spec` `/handoff` `/adr` `/runbook` `/apidoc` `/componentdoc` | Architecture + Docs |
+| 9 | **learn** ⭐ | `/learn` `/instinct` `/evolve` `/review-instincts` `/consolidate` `/cross-link` | Ingest + Consolidation + Evolution |
 
 ## 🚀 Install
 
 ```bash
 # Clone
-git clone git@github.com:tampd/AG-SKILL.git /root/skill/ag-skill
+git clone git@github.com:tampd/skill.git /root/skill
 
 # Symlink vào Antigravity skills directory
 for skill in session build fix craft secure automate content spec learn; do
-  ln -sfn /root/skill/ag-skill/$skill /root/.gemini/antigravity/skills/$skill
+  ln -sfn /root/skill/$skill /root/.gemini/antigravity/skills/$skill
 done
 
 # Verify
@@ -54,67 +48,58 @@ ls /root/.gemini/antigravity/skills/
 
 ```
 Bắt đầu phiên?           → /start [task]
-Ý tưởng mơ hồ?           → /plan [idea]
-Feature phức tạp?         → /plan [feature]
-Research trước code?      → /search [need]
+Resume phiên cũ?          → /recall
 Viết code?                → /build [task]           🔥 TDD + Search-First
-Gặp bug?                  → /fix [bug]              🐛 4-Phase + Instinct
+Gặp bug?                  → /fix [bug]              🐛 4-Phase + Auto-Ingest
 Design UI?                → /craft [task]           🎨 Tokens + WCAG
-Design tokens?            → /tokens [scope]
-Browser test?             → /e2e [scope]
-Audit chất lượng?         → /audit [scope]
-Audit bảo mật?            → /security [target]      🔒 OWASP
-Hardening?                → /harden [service]
-Chuẩn bị deploy?          → /ship [env]             🔒 Production Ready
-API / webhook?            → /integrate [service]     ⚡
-N8N workflow?             → /n8n [task]              ⚡
-Thiết kế MCP tool?        → /mcp [tool-name]
-Content brief?            → /brief [topic]           📝
-Viết bài SEO?             → /seo [topic]             📝
-Viết article?             → /article [topic]         📝
-Audit content?            → /audit-content [URL]
-Architecture docs?        → /spec [scope]            📋 15 sections
-Bàn giao dự án?           → /handoff [project]       📋 15 sections
-API documentation?        → /apidoc [endpoint]
-Component docs?           → /componentdoc [scope]
-Ghi ADR?                  → /adr [decision]          📋
-Tạo runbook?              → /runbook [service]       📋
-Ghi bài học?              → /learn [observation]     🧠
-Xem instincts?            → /instinct
-Evolve instincts?         → /evolve                  🧠
-Review instincts?         → /review-instincts
-Review code?              → /review [scope]
-Lưu context?              → /checkpoint
-Kết thúc phiên?           → /save
+Chuẩn bị deploy?          → /ship [env]             🔒 Production Readiness
+Ghi bài học?              → /learn [observation]     🧠 Ingest + Tag
+Tổng hợp insights?       → /consolidate             🧠 Sleep-Brain Pass
+Kết thúc phiên?           → /save                    (auto /consolidate)
 ```
 
-## 🧠 Memory Architecture (5 Layers)
+## 🧠 Memory Architecture (6 Layers)
 
-| Layer | Engine | Purpose |
-|---|---|---|
-| Working | `ACTIVE_CONTEXT.md` | Session memory (deleted after /save) |
-| Semantic | `GEMINI.md`, `STATE.md` | Project brain |
-| Episodic | `LESSONS.md`, `CHANGELOG.md` | Long-term (append-only) |
-| Instinct | `INSTINCTS.md` | Learned patterns + confidence |
-| Vector | Qdrant MCP (optional) | Semantic search |
+```
+LAYER 0 — INGEST        Auto-tag: Entity + Topic + Importance
+LAYER 1 — WORKING       ACTIVE_CONTEXT.md (session temp)
+LAYER 2 — SEMANTIC      GEMINI.md + STATE.md (project brain)
+LAYER 3 — EPISODIC      LESSONS.md + CHANGELOG.md (append-only)
+LAYER 4 — INSTINCT      INSTINCTS.md (patterns + confidence)
+LAYER 5 — CONSOLIDATION INSIGHTS.md (cross-memory connections)
+```
 
 ## 📜 20 Global Rules
 
-**Core**: Ask when unclear · Read memory first · Evidence-based · Self-reasoning gate
-**Architecture**: Spec before code · Plan-first · Brainstorm gate · ADR for decisions
-**Code Quality**: TDD Iron Law · Search-first · Quality gate · Cleanup pass
-**Verification**: Root cause first · Verification loop · Instinct validation
-**Design**: WCAG AA · Design tokens · Performance budget
-**Standards**: Security headers · README sync
+| # | Category | Rule |
+|---|---|---|
+| 1 | Core | Ask when unclear |
+| 2 | Core | Read memory first (LESSONS + INSTINCTS + INSIGHTS) |
+| 3 | Core | Evidence-based decisions |
+| 4 | Core | Self-Reasoning Gate (3-question check) |
+| 5 | Core | Search-first |
+| 6 | Arch | Spec before code |
+| 7 | Arch | Plan-first with task list |
+| 8 | Arch | Brainstorm hard gate (≥2 approaches) |
+| 9 | Arch | ADR for big decisions |
+| 10 | Arch | Wave execution |
+| 11 | Code | TDD Iron Law |
+| 12 | Code | Quality gate before commit |
+| 13 | Code | Cleanup pass |
+| 14 | Code | Atomic commits |
+| 15 | Verify | Root cause first |
+| 16 | Verify | Verification loop |
+| 17 | Verify | Instinct validation |
+| 18 | Design | WCAG AA |
+| 19 | Design | Design tokens mandatory |
+| 20 | Design | Performance budget |
 
-## 📝 Inspiration
+## 📝 Sources
 
-- [everything-claude-code](https://github.com/affaan-m/everything-claude-code) — Search-First, De-sloppify, Instincts
-- [awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills) — 500+ cross-platform skills
-- [context-engineering-kit](https://github.com/NeoLabHQ/context-engineering-kit) — Context management
-- [compound-engineering-plugin](https://github.com/EveryInc/compound-engineering-plugin) — Learning loop
-- [platform-design-skills](https://github.com/ehmo/platform-design-skills) — 300+ design rules
-- Skill System v7.0 — Zero Overlap, Self-Reasoning Gate, 5-Layer Memory
+- Google ADK `always-on-memory-agent` (Ingest → Consolidate → Cross-Link → Query)
+- AG-SKILL v2.0 (9 Skills, 32 Commands, 20 Rules)
+- Research: awesome-claude-code, awesome-agent-skills + 10 more GitHub repos
+- ECC (Extreme Claude Code) methodology
 
 ## 📄 License
 

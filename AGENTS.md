@@ -23,28 +23,28 @@ rm -f file                  # NOT: rm file
 rm -rf directory            # NOT: rm -r directory
 ```
 
-## Skill System v6.0 Core Rules
+## APEX Skill System v2.0 Core Rules
 
 **MANDATORY** for all AI agents working on this project:
 
-1. **TDD Iron Law (Rule 6)**: Write tests BEFORE code. RED → GREEN → REFACTOR → COMMIT.
-2. **Brainstorming Hard Gate (Rule 7)**: `/plan` MUST ask + propose ≥ 2 approaches BEFORE creating specs.
-3. **Root Cause First (Rule 8)**: `/fix` MUST complete Phase 1 (Root Cause) BEFORE fixing.
-4. **Spec-Driven Changes**: Each change = 1 folder (`changes/<name>/`) with proposal.md, specs/, design.md, tasks.md.
-5. **2-Stage Review**: Stage 1: Spec compliance. Stage 2: Code quality.
-6. **WCAG AA (Rule 9)**: All user-facing pages MUST meet WCAG 2.2 AA.
-7. **Security Headers (Rule 10)**: HSTS, CSP, X-Frame-Options mandatory.
-8. **Design Tokens (Rule 11)**: No hardcoded colors/fonts/spacing — use semantic tokens.
-9. **Performance Budget (Rule 12)**: Lighthouse ≥ 90, LCP < 2.5s, CLS < 0.1, JS < 150KB gzip.
-10. **Self-Reasoning Gate (Rule 13)**: 3-Question Self-Check before EVERY execution decision — best approach? hidden risks? user approval needed?
+1. **Self-Reasoning Gate (Rule 4)**: 3-Question Self-Check before EVERY execution — best approach? hidden risks? user approval needed?
+2. **TDD Iron Law (Rule 11)**: Write tests BEFORE code. RED → GREEN → REFACTOR → COMMIT.
+3. **Brainstorming Hard Gate (Rule 8)**: `/plan` MUST propose ≥2 approaches BEFORE creating specs.
+4. **Root Cause First (Rule 15)**: `/fix` MUST complete Phase 1 (Root Cause) BEFORE fixing.
+5. **Atomic Commits (Rule 14)**: 1 task = 1 commit. Conventional format: `feat|fix|chore(scope): mô tả`
+6. **WCAG AA (Rule 18)**: All user-facing pages MUST meet WCAG 2.2 AA.
+7. **Design Tokens (Rule 19)**: No hardcoded colors/fonts/spacing — use semantic tokens.
+8. **Performance Budget (Rule 20)**: LCP ≤2.5s, CLS ≤0.1, FID ≤100ms.
 
-### 14 Skills (v6.0 — Memory-First Architecture)
+### 9 Skills — 35 Commands (APEX v2.0)
 
 | Category | Skills |
 |---|---|
-| **Core** | start, build ⭐, fix, save, plan, memory |
-| **Web** | craft 🆕 (design+frontend), quality 🆕 (guard+perf+review), ship 🆕 |
-| **Specialist** | integrate, n8n-pro, web-security, docs, seo |
+| **Core** | session (`/start` `/save` `/checkpoint` `/review` `/recall`), build ⭐ (`/build` `/plan` `/search`), fix (`/fix`) |
+| **Design** | craft (`/craft` `/audit` `/tokens` `/e2e`) |
+| **Ops** | secure (`/security` `/harden` `/ship`), automate (`/n8n` `/integrate` `/mcp`) |
+| **Content** | content (`/seo` `/article` `/brief` `/audit-content`), spec ⭐ (`/spec` `/handoff` `/adr` `/runbook` `/apidoc` `/componentdoc`) |
+| **Learning** | learn ⭐ (`/learn` `/instinct` `/evolve` `/review-instincts` `/consolidate` `/cross-link`) |
 
 See `GEMINI.md` for full rules and individual `*/SKILL.md` for workflows.
 

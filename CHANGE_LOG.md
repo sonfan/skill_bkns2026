@@ -1,5 +1,27 @@
 # CHANGE LOG — Skill Repository
 
+## 2026-03-10
+
+### Changed
+- **APEX v2.0** — Full system upgrade from AG-SKILL v2.0 to APEX v2.0
+  - 6-Layer Memory Architecture (+Layer 0 Ingest, +Layer 5 Consolidation)
+  - 35 commands (up from 32): +`/consolidate`, `/cross-link`, `/recall`
+  - INSIGHTS.md: compound insights from memory consolidation
+  - Importance Scoring (0.0–1.0) for LESSONS entries
+  - Auto-Ingest tagging (Entity/Topic/Importance)
+  - Sleep-Brain Consolidation Pass
+  - Combo Skills workflow table
+  - ACTIVE_CONTEXT.md standardized schema
+  - Skills upgraded: session (/recall, 6-Layer Bootstrap), build (Memory Load), fix (Auto-Ingest), learn (/consolidate, /cross-link)
+  - Templates added: `INSIGHTS.md`, `ACTIVE_CONTEXT.md`
+  - Synthesized from: AG-SKILL v2.0 + Google ADK memory-agent + APEX v1.0 draft
+
+### Removed
+- `ag-skill/` subfolder (duplicate of root skills)
+- `AG-SKILLv2.zip`, `skill-mainv6.1.zip` (old archives)
+- `skill_memory.md`, `Bkns Dev Operating System Packv2.docx` (integrated into templates)
+- `APEX-SKILL-SYSTEM.md` (integrated into GEMINI.md + skills)
+
 ## 2026-03-06
 
 ### Added

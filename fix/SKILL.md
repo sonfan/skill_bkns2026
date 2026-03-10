@@ -3,21 +3,23 @@ name: fix
 description: Bug fixing and debugging. Use for /fix (debug any error), error traces, crashes, unexpected behavior, failing tests. Triggers on "lỗi", "bug", "crash", "không chạy được", "error", "exception", "fix", "debug", "sửa lỗi".
 ---
 
-# Fix Skill — 4-Phase Debug + Instinct Matching + Verification Loop
+# Fix Skill — 4-Phase Debug + Insight Match + Auto-Ingest
 
 ## /fix [bug description or error]
 > Tìm root cause trước khi fix — không patch symptoms
 
 ```
-PHASE 0 — INSTINCT MATCH (10 giây)
+PHASE 0 — MEMORY MATCH (10 giây)
   □ Check INSTINCTS.md: đã gặp error pattern này chưa?
   □ Nếu có instinct match (confidence ≥0.7) → apply và log
+  □ Check LESSONS.md: search entities/topics liên quan
+  □ Check INSIGHTS.md: có compound insight nào liên quan?
+     → Nếu có: "💡 INSIGHT liên quan: [tóm tắt]"
   □ Nếu không match → tiếp tục 4-phase debug
-  □ Ghi lại: "Applied instinct #X to this bug"
 
 PHASE 1 — REPRODUCE (không fix mù)
   □ Reproduce bug một cách nhất quán
-  □ Xác định: bug xảy ra LUÔN hay ĐÔIKHI?
+  □ Xác định: bug xảy ra LUÔN hay ĐÔI KHI?
   □ Xác định: trigger conditions là gì?
   □ Xác định: expected vs actual behavior
   □ Screenshot / error trace / log đầy đủ
@@ -32,18 +34,32 @@ PHASE 2 — DIAGNOSE (root cause)
   □ 5-WHY technique: hỏi "tại sao" 5 lần để tìm root cause thật sự
   □ Ghi: "Root cause is: ___" trước khi viết bất kỳ fix nào
 
+  🛑 STOP: Không được bắt đầu PHASE 3 khi chưa xác nhận root cause.
+
 PHASE 3 — FIX (targeted, minimal)
+  □ SELF-REASONING GATE:
+      (a) Đây có phải cách fix tốt nhất? (≥2 alternatives)
+      (b) Có risk/side-effect nào đang bỏ qua?
+      (c) User có cần approve không?
   □ Fix chỉ root cause — không "cải thiện" thêm trong cùng PR
   □ Nếu fix ảnh hưởng nhiều file → comment rõ lý do từng change
   □ Thêm test case reproduce exact bug (regression guard)
   □ Đảm bảo fix không break existing tests
 
-PHASE 4 — VERIFY (không báo done nếu chưa qua đây)
+PHASE 4 — VERIFY + LEARN (APEX Enhanced)
   □ Bug đã được reproduce trước fix → confirm không còn reproduce được
   □ Run full test suite: không có new failures
   □ Nếu là UI bug → dùng Antigravity Browser Agent để visual verify
   □ Run VERIFICATION LOOP: lint → type-check → test → audit
   □ Log instinct result: fix này đúng hay sai? Update confidence
+
+  AUTO-INGEST:
+  □ Tự động chạy Ingest tagging:
+     Summary, Entities, Topics, Importance score
+  □ "📝 Ghi bài học này vào LESSONS.md không?"
+  □ Nếu có: format APEX entry + check connections
+  □ "🔗 Tìm thấy connection với #BUG-XXX, #BUG-YYY"
+  □ "/consolidate khi nào? Đã có [N] lessons mới."
 ```
 
 ---

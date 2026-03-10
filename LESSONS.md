@@ -1,7 +1,7 @@
 # LESSONS — Skill Repository
 
 > **Mục đích**: Ghi nhận bugs, bài học, quy tắc rút ra. KHÔNG BAO GIỜ xóa entries.
-> **Format**: #WARN-NNN — mỗi entry có triệu chứng + root cause + fix (✅❌ code) + quy tắc.
+> **Format**: #BUG-NNN / #WARN-NNN — APEX format với Importance + Entities + Topics + Connected.
 
 ---
 
@@ -17,8 +17,9 @@
 
 ### 🟡 #WARN-001 — Upgrade skills phải update cross-references (2026-03-05)
 
-- **Mức độ:** 🟡 Warning
-- **Thẻ:** #upgrade, #consistency, #cross-reference
+- **Importance:** 0.6 | 🟡 Warning
+- **Entities:** [skill-upgrade, cross-reference, SKILL.md]
+- **Topics:** #upgrade, #consistency, #cross-reference
 - **Triệu chứng:** Sau upgrade 4 core skills v4.1→v5.0 (build/plan/fix/save), `/start` vẫn scan `.agent/commands/` thay vì `changes/`. Version refs cũ (v4.1) còn lại trong `/start` và `/memory`. Keyword auto-select thiếu v5.0 terms (TDD, change folder).
 - **Nguyên nhân gốc:** Chỉ focus upgrade 4 skills target mà không audit cross-references trong 11 skills còn lại + AGENTS.md.
 - **Cách fix:**
@@ -31,4 +32,5 @@
   # Sửa build/SKILL.md nhưng quên start/SKILL.md vẫn scan .agent/commands/
   ```
 - **Quy tắc rút ra:** Mỗi khi upgrade N skills → **BẮT BUỘC** grep toàn bộ repo tìm refs cũ + test /start output.
+- **Connected:** —
 - **File liên quan:** `start/SKILL.md`, `memory/SKILL.md`, `AGENTS.md`
