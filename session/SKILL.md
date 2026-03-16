@@ -3,7 +3,7 @@ name: session
 description: Session lifecycle management. Use for /start (begin session), /save (end session), /checkpoint (save mid-session), /review (multi-perspective code review), /recall (quick resume). Triggers on "bắt đầu phiên", "kết thúc phiên", "lưu context", "review code", "start session", "save session", "recall", "resume".
 ---
 
-# Session Skill — 4-Layer Smart Retrieval + Consolidation Save + Quality Gate (v5.0)
+# Session Skill — 4-Layer Smart Retrieval + Consolidation Save + Quality Gate (v5.2)
 
 ## /start [task]
 > Khởi động phiên làm việc, load 4-Layer smart memory, set context
@@ -105,6 +105,17 @@ OUTPUT FORMAT:
 □ AUTO-MEMORY: ghi insights phiên này vào .ai/memory/MEMORY.md
 □ Ghi timestamp
 □ Output: "✅ Checkpoint #N lưu thành công lúc HH:MM"
+
+COMPACTION DECISION GUIDE (khi nào nên checkpoint/compact?):
+  | Phase Transition          | Compact? | Lý do                                    |
+  |---------------------------|----------|------------------------------------------|
+  | Research → Planning       | ✅ Có    | Research context cồng kềnh; plan tinh gọn|
+  | Planning → Implementation | ✅ Có    | Plan đã lưu file; giải phóng cho code    |
+  | Implementation → Testing  | 🟡 Tùy  | Giữ nếu tests reference code gần đây     |
+  | Debugging → Feature mới   | ✅ Có    | Debug traces gây nhiễu cho task mới      |
+  | Giữa implementation       | ❌ Không | Mất file paths, variable names, state    |
+  | Sau approach thất bại     | ✅ Có    | Clear dead-end reasoning trước approach   |
+  Source: ECC strategic-compact (affaan-m/everything-claude-code)
 ```
 
 ---
@@ -134,6 +145,10 @@ STEP 2 — VERIFICATION GATE (Evidence Before Claims)
   | "Linter passed"           | Linter ≠ type-check ≠ tests        |
   | "Agent said success"      | Verify independently               |
   | "Partial check is enough" | Partial proves nothing             |
+  | "Chỉ đổi 1 dòng code"    | Code change size ≠ deploy risk     |
+  | "CSS hash MATCH"          | Verify values không empty/null     |
+  | "PM2 restart OK"          | PM2 restart ≠ app healthy          |
+  | "Build output bị cắt"    | Cắt = CHƯA XONG. Re-run required  |
 
   RED FLAGS — nếu đang nghĩ từ "should", "probably", "seems to" → STOP, RUN verification
 

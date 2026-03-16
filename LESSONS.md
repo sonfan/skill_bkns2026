@@ -11,11 +11,47 @@
 
 | Tổng entries | 🔴 Critical | 🟡 Warning | 🟢 Info |
 |---|---|---|---|
-| 1 | 0 | 1 | 0 |
+| 2 | 1 | 1 | 0 |
 
 ---
 
 ## Entries
+
+### 🔴 #BUG-001 — Production deploy without verification → 504 down 42 phút (2026-03-15)
+
+- **Importance:** 1.0 | 🔴 Critical
+- **Type:** experience
+- **Entities:** [blog.chaiko.info, pm2, next.js, nginx, BUILD_ID, deploy]
+- **Topics:** #deploy, #verification, #production, #504, #downtime
+- **Observation:** Deploy đổi 1 URL Facebook trên blog.chaiko.info. Build timeout 120s (output bị cắt), `.next/BUILD_ID` không tồn tại, PM2 crash loop 1,673 restarts → 504 Gateway Timeout 42 phút. AI claim "Deploy thành công!" mà KHÔNG verify build exit code, BUILD_ID, hay HTTP 200.
+- **Anti-patterns phát hiện:**
+  ```
+  1. "Chỉ đổi 1 dòng code" → Code change size ≠ deploy risk
+  2. "CSS hash MATCH" → Cả 2 đều empty: "" == "" = false positive
+  3. "PM2 restart OK" → PM2 restart ≠ app healthy
+  4. "Build output bị cắt" → Cắt = CHƯA XONG, phải re-run
+  ```
+- **Quy tắc rút ra — PRODUCTION DEPLOY CHECKLIST (6 bước bắt buộc):**
+  ```bash
+  # 1. STOP
+  pm2 stop <app-name>
+  # 2. BUILD (chờ hoàn tất, KHÔNG timeout)
+  npm run build
+  echo "Exit code: $?"  # PHẢI = 0
+  # 3. VERIFY BUILD ARTIFACTS
+  test -f .next/BUILD_ID && echo "✅ BUILD_ID exists" || echo "❌ BUILD FAILED"
+  # 4. START
+  pm2 restart <app-name> && sleep 5
+  # 5. VERIFY LOCAL
+  curl -sI http://localhost:PORT -o /dev/null -w '%{http_code}'  # PHẢI = 200
+  # 6. VERIFY EXTERNAL
+  curl -sI https://DOMAIN -o /dev/null -w '%{http_code}'  # PHẢI = 200
+  ```
+- **Bài học cốt lõi:** Thay đổi code đơn giản ≠ deploy an toàn. **Build + Deploy LUÔN là high-risk**, bất kể code change nhỏ đến đâu. PHẢI chạy full checklist.
+- **Connected:** Rule 24 (Verification Gate), BƯỚC 5 (build/SKILL.md), /ship (secure/SKILL.md)
+- **File liên quan:** `build/SKILL.md`, `session/SKILL.md`, `secure/SKILL.md`
+
+---
 
 ### 🟡 #LEARN-001 — Open-source skill frameworks as upgrade catalyst (2026-03-14)
 

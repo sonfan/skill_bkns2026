@@ -1,5 +1,33 @@
 # CHANGE LOG — Skill Repository
 
+## 2026-03-16
+
+### Changed
+- **APEX v5.2 — Selective Upgrade (Research-backed)**
+  - **build/SKILL.md**: Verification Report output format (structured PASS/FAIL table sau mỗi verify)
+  - **build/SKILL.md**: Context Health Monitor v2.1 — 5-level scale (thêm 🟠 Attention 50-70%), research-backed thresholds: 70%→precision loss, 85%→hallucinations (ACM 2025 + Florian Guide)
+  - **fix/SKILL.md**: Hypothesis-Driven Debugging — Phase 2 thêm form→verify→iterate hypothesis trước 5-WHY
+  - **session/SKILL.md**: Compaction Decision Guide — bảng quyết định khi nào nên checkpoint/compact (research → planning → implementation phases)
+  - **learn/SKILL.md**: `/skill-audit` command — 4-phase kiểm tra sức khỏe skill system (Inventory→Quality→Summary→Recommendations)
+  - **GEMINI.md**: Token optimization — Memory Architecture diagram + Importance Score + Combo Skills → `session/references/memory-architecture.md` (giảm 24.5% tokens, 16,599→12,536 bytes)
+  - **GEMINI.md**: Thêm `/skill-audit` vào learn skill commands + cheat sheet
+  - Research-based: affaan-m/everything-claude-code v1.8.0 (78k⭐), FlorianBruniaux/claude-code-ultimate-guide, shanraisshan/claude-code-best-practice, ECC skill-stocktake, ECC strategic-compact
+  - Files new: session/references/memory-architecture.md
+  - Files changed: build/SKILL.md, fix/SKILL.md, session/SKILL.md, learn/SKILL.md, GEMINI.md, CHANGE_LOG.md
+
+## 2026-03-15
+
+### Changed
+- **APEX v5.1 — Production Deploy Safety Gate**
+  - **Incident**: blog.chaiko.info 504 down 42 phút do build timeout + skip verification
+  - **LESSONS #BUG-001** (importance 1.0): 6-step Production Deploy Checklist + 4 anti-patterns
+  - **build/SKILL.md BƯỚC 5**: Thêm PRODUCTION DEPLOY GATE — bắt buộc verify build artifacts + HTTP 200
+  - **build/SKILL.md BƯỚC 8**: Thêm deploy reflexion question ("build thật sự thành công?")
+  - **session/SKILL.md /save STEP 2**: +4 deploy anti-rationalization rows (empty hash, PM2 restart, build cắt, small change bias)
+  - **secure/SKILL.md /ship**: POST-DEPLOY SMOKE TEST section — 5 concrete bash commands (BUILD_ID, process health, local HTTP, external HTTP, body size)
+  - Root cause: AI "simple change bias" — nhầm code change nhỏ = deploy risk thấp
+  - Files changed: LESSONS.md, build/SKILL.md, session/SKILL.md, secure/SKILL.md, CHANGE_LOG.md
+
 ## 2026-03-14
 
 ### Changed

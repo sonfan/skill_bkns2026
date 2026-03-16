@@ -3,7 +3,7 @@ name: build
 description: "Feature implementation and code writing. Use for /build (implement feature with TDD), /plan (plan before code), /search (research), /gsd (full GSD cycle). Triggers on: viết code, implement, tạo feature, build, tdd, xây dựng, gsd."
 ---
 
-# Build Skill — Search-First + TDD + Memory-Enhanced Build (v5.0)
+# Build Skill — Search-First + TDD + Memory-Enhanced Build (v5.2)
 
 > 📂 Chi tiết bổ sung: `build/references/patterns.md` | `build/references/parallel-guide.md`
 
@@ -68,7 +68,7 @@ PHASE P — PLAN
   ⚡ CONTEXT CHECKPOINT: Nếu context >50% → /save + fresh session
 
 PHASE E — EXECUTE
-  □ Implement theo /build protocol (7-Step)
+  □ Implement theo /build protocol (8-Step)
   □ Mỗi task = 1 atomic commit
   □ Context health check mỗi 3-5 tasks
   □ Output: Working code + passing tests
@@ -81,7 +81,7 @@ PHASE V — VERIFY
   □ Regression check: impact analysis
   □ Browser verify nếu UI changes
   □ Confirm spec met: checklist từ Phase D
-  □ Output: Verification evidence
+  □ Output: Verification evidence + VERIFICATION REPORT
 
 🛑 KHÔNG skip Phase V — đây là gate chất lượng cuối cùng
 ```
@@ -114,7 +114,7 @@ SEARCH PROTOCOL — 4 Steps:
 ---
 
 ## /build [task]
-> Implement feature với APEX 7-Step Build Protocol
+> Implement feature với APEX 8-Step Build Protocol
 
 ```
 BƯỚC 0 — MEMORY LOAD (v4.2 Biomimetic Retrieval)
@@ -144,7 +144,27 @@ BƯỚC 4 — TDD (Red → Green → Refactor)
 
 BƯỚC 5 — VERIFY
   □ lint → format → type-check → test → audit
-  □ Diff review + regression check
+  □ Diff review: git diff --stat + review từng file changed
+  □ Regression check: impact analysis
+  □ OUTPUT VERIFICATION REPORT (bắt buộc):
+    ┌─────────────────────────────────────────┐
+    │ VERIFICATION REPORT                     │
+    │ Build:     [PASS/FAIL]                  │
+    │ Types:     [PASS/FAIL] (X errors)       │
+    │ Lint:      [PASS/FAIL] (X warnings)     │
+    │ Tests:     [PASS/FAIL] (X/Y, Z%)        │
+    │ Security:  [PASS/FAIL] (X issues)       │
+    │ Diff:      [X files changed]            │
+    │ Overall:   [READY/NOT READY]            │
+    └─────────────────────────────────────────┘
+  □ NẾU DEPLOY PRODUCTION (pm2/systemctl/docker restart):
+    🛑 PRODUCTION DEPLOY GATE — bắt buộc (LESSONS #BUG-001)
+    → Build exit code = 0? (output KHÔNG bị cắt/timeout)
+    → Build artifacts tồn tại? (vd: .next/BUILD_ID, dist/)
+    → HTTP 200 từ localhost? (curl -sI http://localhost:PORT)
+    → HTTP 200 từ external URL? (curl -sI https://DOMAIN)
+    → Response body KHÔNG empty? (wc -c > 100)
+    → "Code change nhỏ" ≠ "deploy an toàn" — LUÔN verify
 
 BƯỚC 6 — CLEANUP PASS (separate pass)
   □ Scan: console.log, debugger, TODO cũ, magic numbers, dead code
@@ -158,6 +178,7 @@ BƯỚC 8 — REFLEXION (self-review sau commit)
     - "Code này solve đúng problem được đặt ra chưa?"
     - "Có edge case nào tôi bỏ sót?"
     - "Test coverage đủ cho logic mới chưa?"
+    - "Nếu task có DEPLOY: build THẬT SỰ thành công? App accessible?"
   □ Nếu phát hiện vấn đề → fix ngay + amend commit
   □ Nếu OK → tiếp tục task tiếp theo
 
@@ -188,16 +209,21 @@ OUTPUT: Detailed plan → User approve → Execute
 
 ---
 
-## CONTEXT HEALTH MONITOR v2 📊
+## CONTEXT HEALTH MONITOR v2.1 📊
+> Research-backed: ACM 2025 + Florian Guide — context pressure thresholds
 
 ```
 Giám sát 3 chiều context health trong suốt build session:
 
-  DIMENSION 1 — USAGE (dung lượng context window):
+  DIMENSION 1 — USAGE (research-backed thresholds):
     🟢 Fresh  (0-30%):  Full capability, all tasks OK
-    🟡 Loaded (30-60%): Monitor, tạo checkpoints thường xuyên
-    🔴 Heavy  (60-80%): Commit, /save + fresh session cho complex tasks
-    💀 Critical (>80%): MUST save + restart TRƯỚC khi tiếp tục
+    🟡 Loaded (30-50%): Monitor, tạo checkpoints thường xuyên
+    🟠 Attention (50-70%): AI bắt đầu mất precision. /checkpoint thường xuyên
+    🔴 Heavy  (70-85%): Hallucinations tăng. Commit + /save TRƯỚC khi tiếp tục
+    💀 Critical (>85%): Responses erratic. BẮT BUỘC /save + fresh session
+
+    Research: "At 70% context, AI loses precision. At 85%, hallucinations
+    increase. At 90%+, responses become erratic." — ACM 2025 + Florian Guide
 
   DIMENSION 2 — RELEVANCE (context có liên quan task hiện tại?):
     □ Scan context hiện tại: bao nhiêu % liên quan task đang làm?

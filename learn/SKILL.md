@@ -3,7 +3,7 @@ name: learn
 description: Continuous learning, instinct tracking, pattern extraction, and memory consolidation. Use for /learn (capture observation), /instinct (view/manage instincts), /evolve (cluster instincts into skills), /review-instincts (validate and prune), /consolidate (sleep-brain pass), /cross-link (manual connections). Triggers on "học hỏi", "pattern", "instinct", "lesson", "bài học", "ghi nhớ", "learn", "extract pattern", "consolidate", "cross-link", "insights".
 ---
 
-# Learn Skill — Ingest + Consolidation + Instinct Evolution (v4.2 Biomimetic)
+# Learn Skill — Ingest + Consolidation + Instinct Evolution (v5.2 Biomimetic)
 
 ## INSTINCTS.md Format
 ```yaml
@@ -248,4 +248,35 @@ PRUNE CANDIDATES (<0.30, ≥5 lần apply):
   □ Xem lại counter-examples
   □ Archive hoặc rewrite
   □ Không xóa — chỉ deactivate (history preserved)
+```
+
+---
+
+## /skill-audit
+> Kiểm tra sức khỏe toàn bộ skill system — adapted từ ECC skill-stocktake
+
+```
+PHASE 1 — INVENTORY
+  □ List tất cả SKILL.md files + last modified date
+  □ Extract frontmatter: name, description, version
+  □ Count: tổng commands, tổng rules
+
+PHASE 2 — QUALITY CHECK (mỗi skill)
+  □ Content overlap với GEMINI.md? → flag để deduplicate
+  □ Content overlap với skill khác? → flag để merge
+  □ Technical references còn chính xác? (verify với search nếu cần)
+  □ Verdict per skill: Keep | Improve | Update | Merge
+
+PHASE 3 — SUMMARY TABLE
+  | Skill     | Version | Last Modified | Verdict | Reason          |
+  |-----------|---------|---------------|---------|-----------------|
+
+PHASE 4 — RECOMMENDATIONS
+  □ Token reduction opportunities (nội dung dài → di chuyển vào references/)
+  □ Skills cần update (outdated references)
+  □ Orphan files (references/ files không ai import)
+  □ Missing implementations (commands trong GEMINI.md chưa có trong SKILL.md)
+
+OUTPUT: Health report + prioritized upgrade suggestions
+Source: ECC skill-stocktake (affaan-m/everything-claude-code)
 ```

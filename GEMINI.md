@@ -1,4 +1,4 @@
-# APEX SKILL SYSTEM v4.2 — Global Rules
+# APEX SKILL SYSTEM v5.2 — Global Rules
 > Applied to ALL sessions in this project. Read before every task.
 > Triết lý: AI không bao giờ quên. Mỗi phiên đều học hỏi và kết nối với quá khứ. Fresh context = High quality.
 
@@ -47,7 +47,7 @@
 
 ### Fresh Context & Deep Thinking (v4.0)
 21. **ULTRATHINK GATE** — Architecture decisions, complex bugs, refactoring >5 files → prefix "ultrathink:" → full analysis plan (≥500 words) TRƯỜC khi code. List ≥3 alternatives.
-22. **CONTEXT HEALTH MONITOR** — Track context window health: 🟢 Fresh (0-30%) | 🟡 Loaded (30-60%) | 🔴 Heavy (60-80%) | 💀 Critical (>80%). Khi Heavy/Critical → commit, /save, fresh session.
+22. **CONTEXT HEALTH MONITOR v2.1** — Track context health: 🟢 Fresh (0-30%) | 🟡 Loaded (30-50%) | 🟠 Attention (50-70%) | 🔴 Heavy (70-85%) | 💀 Critical (>85%). Research-backed: 70%→precision loss, 85%→hallucinations (ACM 2025). Khi Heavy/Critical → commit, /save, fresh session.
 23. **GSD CYCLE** — Features lớn dùng /gsd: Discuss → Plan → Execute → Verify. Mỗi phase có checkpoint context. KHÔNG skip Phase V (Verify).
 
 ### Subagent & Verification (v4.1)
@@ -86,84 +86,17 @@ Context Health       → Monitor context window, auto-suggest fresh session (v4.
 | 6 | **automate** | `/n8n` `/integrate` `/mcp` | ⚡ N8N + API Design + MCP Tool Design |
 | 7 | **content** | `/seo` `/article` `/brief` `/audit-content` | 📝 SEO Pipeline + Content Engine |
 | 8 | **spec** ⭐ | `/spec` `/handoff` `/adr` `/runbook` `/apidoc` `/componentdoc` | 📋 Architecture + Handoff + API/Component Docs |
-| 9 | **learn** ⭐ | `/learn` `/instinct` `/evolve` `/review-instincts` `/consolidate` `/cross-link` | 🧠 Ingest + Consolidation + Instinct Evolution |
+| 9 | **learn** ⭐ | `/learn` `/instinct` `/evolve` `/review-instincts` `/consolidate` `/cross-link` `/skill-audit` | 🧠 Ingest + Consolidation + Instinct Evolution + Skill Health |
 
 ---
 
 ## 🧠 MEMORY ARCHITECTURE v4.2 — Biomimetic + 3-Strategy Recall
 
-> Triết lý: Không đọc hết, chỉ đọc đúng. Memory có type + thời gian + nghĩa.
-> Inspired by: vectorize-io/hindsight (biomimetic memory — world/experiences/mental models)
+> 📂 Chi tiết: `session/references/memory-architecture.md` (diagrams, importance scores, combo skills)
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  LAYER A — RULES (tĩnh, user kiểm soát, luôn đọc)          │
-│  Files: GEMINI.md, STATE.md                                  │
-│  Nội dung: Tech stack, conventions, rules, project state     │
-│  Đặc điểm: Git-tracked, human-editable                       │
-├─────────────────────────────────────────────────────────────┤
-│  LAYER B — CRITICAL LESSONS (biomimetic, ≤10 entries)        │
-│  File: LESSONS.md (importance ≥ 0.8)                         │
-│  Archive: LESSONS_ARCHIVE.md (importance < 0.8 hoặc cũ)      │
-│  Memory Types: world | experience | mental_model (Rule 26)   │
-│  Đặc điểm: Luôn đọc mỗi /start, ngắn gọn, git-tracked      │
-├─────────────────────────────────────────────────────────────┤
-│  LAYER C — SEMANTIC MEMORY (Qdrant, 3-strategy recall)      │
-│  Engine: Qdrant Vector DB (MCP: qdrant_find / qdrant_store)  │
-│  Recall: semantic + keyword + temporal (3 chiều)             │
-│  Metadata: memory_type, timestamp, entities, importance      │
-│  Đặc điểm: Cross-project, scale vô hạn, multi-strategy      │
-├─────────────────────────────────────────────────────────────┤
-│  LAYER D — AUTO-MEMORY (AI tự viết, local)                  │
-│  File: .ai/memory/MEMORY.md (≤200 dòng) + topic files        │
-│  Nội dung: Debugging insights, gotchas, project-specific      │
-│  Đặc điểm: AI tự ghi, machine-local, không git               │
-│  200-line rule: quá dài → tách thành topic files              │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### Memory Types (Biomimetic — Rule 26)
-```
-world        = Facts về tech/framework/tool (tĩnh, ít thay đổi)
-               VD: "Laravel route specific trước wildcard"
-experience   = Trải nghiệm debug/build/deploy cụ thể
-               VD: "Fix bug N+1 bằng whereIn trong PayrollController"
-mental_model = Pattern tổng hợp từ nhiều experiences (reflect output)
-               VD: "70% lỗi deploy liên quan .env → checklist pre-deploy"
-
-Recall priority theo task type:
-  /fix  → experience first, then mental_model
-  /build → world + mental_model first
-  /craft → world (tokens) + mental_model (UX patterns)
-```
-
-### /start Smart Load Flow (v4.2)
-```
-1. RULES:    Đọc GEMINI.md + STATE.md                    ← Layer A
-2. CRITICAL: Đọc LESSONS.md (≤10 entries, ≥0.8)          ← Layer B
-3. 3-STRATEGY RECALL:                                    ← Layer C
-   a. Semantic: qdrant_find(task context) → top 5
-   b. Keyword:  grep LESSONS + ARCHIVE (tags, entities)
-   c. Temporal: entries từ 7 ngày gần nhất
-   → Merge top-5 (deduplicate, ưu tiên match ≥2 strategies)
-4. AUTO:     Đọc .ai/memory/MEMORY.md (≤200 dòng)        ← Layer D
-5. INSTINCT: INSTINCTS.md (top-3, confidence ≥0.7)       
-6. INSIGHT:  INSIGHTS.md (nếu có liên quan)
-→ Tổng: ~15-20 entries MAX thay vì ALL entries
-```
-
-### Importance Score (áp dụng cho LESSONS entries)
-
-```
-≥0.8 — Giữ trong LESSONS.md (critical, luôn đọc)
-<0.8 — Archive sang LESSONS_ARCHIVE.md (Qdrant search khi cần)
-
-1.0 — Security vulnerability, data loss risk
-0.8 — 🔴 Critical: breaks production, major UX failure
-0.6 — 🟡 Warning: blocks feature, performance hit
-0.4 — 🟢 Info: best practice, optimization tip
-0.2 — 💡 Note: minor improvement, style
-```
+**4 Layers:** A (Rules: GEMINI.md) → B (Critical Lessons: LESSONS.md ≤10) → C (Semantic: Qdrant) → D (Auto: .ai/memory/)
+**3 Memory Types:** `world` (facts) | `experience` (debug/build cụ thể) | `mental_model` (patterns tổng hợp)
+**3-Strategy Recall:** semantic + keyword + temporal → merge top-5, ưu tiên match ≥2 strategies
 
 ---
 
@@ -218,6 +151,7 @@ Tạo runbook?              → /runbook [service]
 Ghi bài học?              → /learn [observation]     🧠 Ingest + Tag
 Xem instincts?            → /instinct
 Evolve instincts?         → /evolve
+Audit skill health?       → /skill-audit              📋
 Review instincts?         → /review-instincts
 Tổng hợp insights?       → /consolidate             🧠 Sleep-Brain Pass
 Cross-link memories?      → /cross-link
@@ -230,16 +164,14 @@ Kết thúc phiên?           → /save                    (auto /consolidate)
 
 ## 📊 COMBO SKILLS
 
+> 📂 Chi tiết: `session/references/memory-architecture.md`
+
 | Tình huống | Combo |
 |---|---|
-| Feature code mới | `/start` → check INSIGHTS → `/build` → `/save` |
-| Feature lớn (GSD) | `/start` → `/gsd` (D→P→E→V) → `/save` |
-| Fix bug | `/fix` (4-phase) → `/learn` (ingest) → `/consolidate` (nếu ≥3 lessons) |
-| API endpoint mới | `/search` → `/build` → `/security` → `/review` |
-| UI/Component mới | `/craft` → `/tokens` → `/audit` → `/e2e` |
-| Dự án mới | `/plan` (GSD) → `/spec` → `/build` (wave-by-wave) |
-| Deploy/Release | `/audit` → `/security` → `/harden` → `/ship` |
-| Sau nhiều phiên | `/consolidate` → check INSIGHTS → `/evolve` |
+| Feature mới | `/start` → `/build` → `/save` |
+| Feature lớn | `/gsd` (D→P→E→V) |
+| Fix bug | `/fix` → `/learn` → `/consolidate` |
+| Deploy | `/audit` → `/security` → `/ship` |
 
 ---
 

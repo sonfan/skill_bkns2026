@@ -3,7 +3,7 @@ name: fix
 description: "Bug fixing and debugging. Use for /fix (debug any error), error traces, crashes, unexpected behavior, failing tests. Triggers on: lỗi, bug, crash, không chạy được, error, exception, fix, debug, sửa lỗi."
 ---
 
-# Fix Skill — 4-Phase Debug + Insight Match + Auto-Ingest (v5.0)
+# Fix Skill — 4-Phase Debug + Insight Match + Auto-Ingest (v5.2)
 
 > 📂 Chi tiết bổ sung: `fix/references/patterns.md` (bug classification, common patterns, browser agent)
 
@@ -35,6 +35,9 @@ PHASE 2 — DIAGNOSE (root cause)
   □ Đọc TOÀN BỘ error message (không chỉ dòng đầu)
   □ Trace call stack từ dưới lên
   □ Check: input data, state, network/async timing, env differences
+  □ Form hypothesis: "Nguyên nhân có thể là ___"
+  □ Verify hypothesis bằng evidence (log, test, reproduce)
+  □ Nếu hypothesis sai → form hypothesis mới, KHÔNG patch
   □ 5-WHY technique → "Root cause is: ___"
 
   🛑 STOP: Không được bắt đầu PHASE 3 khi chưa xác nhận root cause.

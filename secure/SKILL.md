@@ -155,5 +155,23 @@ DEPLOYMENT
   □ Health check endpoint responds
   □ Post-deploy smoke test list ready
 
-SIGN-OFF: Code ✓  Security ✓  Performance ✓  Monitoring ✓  Rollback ✓
+POST-DEPLOY SMOKE TEST (bắt buộc sau MỌI deploy — LESSONS #BUG-001):
+  🛑 KHÔNG claim "deploy thành công" cho đến khi TẤT CẢ checks PASS
+  # 1. Build artifacts tồn tại
+  test -f .next/BUILD_ID && echo "✅" || echo "❌ NO BUILD_ID — build FAILED"
+  # Hoặc: test -d dist/ , test -f build/index.html (tùy framework)
+  # 2. Process healthy (không crash loop)
+  pm2 list | grep -E "online|errored"
+  # Hoặc: systemctl status <service> | grep "active (running)"
+  # 3. Local HTTP 200
+  HTTP=$(curl -sI http://localhost:PORT -o /dev/null -w '%{http_code}')
+  [ "$HTTP" = "200" ] && echo "✅ Local OK" || echo "❌ Local HTTP: $HTTP"
+  # 4. External HTTP 200
+  EXT=$(curl -sI https://DOMAIN -o /dev/null -w '%{http_code}')
+  [ "$EXT" = "200" ] && echo "✅ External OK" || echo "❌ External HTTP: $EXT"
+  # 5. Response body không empty (chống false positive)
+  BODY=$(curl -s https://DOMAIN | wc -c)
+  [ "$BODY" -gt 100 ] && echo "✅ Body: ${BODY}B" || echo "❌ EMPTY RESPONSE"
+
+SIGN-OFF: Code ✓  Security ✓  Performance ✓  Monitoring ✓  Rollback ✓  Smoke ✓
 ```
