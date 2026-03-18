@@ -1,0 +1,8 @@
+# Project-specific
+*.db
+.dolt/
+PASSWORD.md
+ACTIVE_CONTEXT.md
+INSTINCTS.md
+INSIGHTS.md
+STATE.md
