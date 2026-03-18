@@ -37,15 +37,18 @@
 
 ```bash
 # Clone repo
-git clone git@github.com:tampd/skill.git /root/skill
+git clone https://github.com/sonfan/skill_bkns2026.git /home/hostbilldev/public_html/skill_bkns2026
 
 # Tạo thư mục skills (nếu chưa có)
 mkdir -p ~/.gemini/antigravity/skills
 
 # Symlink toàn bộ skills vào Antigravity global
 for skill in session build fix craft secure automate content spec learn; do
-  ln -sfn /root/skill/$skill ~/.gemini/antigravity/skills/$skill
+  ln -sfn /home/hostbilldev/public_html/skill_bkns2026/$skill ~/.gemini/antigravity/skills/$skill
 done
+
+# Copy GEMINI.md vào global config
+cp /home/hostbilldev/public_html/skill_bkns2026/GEMINI.md ~/.gemini/GEMINI.md
 
 # Verify
 ls -la ~/.gemini/antigravity/skills/
@@ -54,7 +57,7 @@ ls -la ~/.gemini/antigravity/skills/
 ### Update
 
 ```bash
-cd /root/skill && git pull
+cd /home/hostbilldev/public_html/skill_bkns2026 && git pull
 # Xong! Symlinks tự cập nhật — không cần chạy lại lệnh link.
 ```
 
