@@ -1,20 +1,21 @@
 ---
 name: session
-description: Session lifecycle management. Use for /start (begin session), /save (end session), /checkpoint (save mid-session), /review (multi-perspective code review), /recall (quick resume). Triggers on "bắt đầu phiên", "kết thúc phiên", "lưu context", "review code", "start session", "save session", "recall", "resume".
+description: Session lifecycle management. Use for /start (begin session), /save (end session), /checkpoint (save mid-session), /review (multi-perspective code review), /recall (quick resume), /init (scaffold new project), /status (quick project overview). Triggers on "bắt đầu phiên", "kết thúc phiên", "lưu context", "review code", "start session", "save session", "recall", "resume", "init", "scaffold", "status", "tiến độ".
 ---
 
-# Session Skill — 4-Layer Smart Retrieval + Consolidation Save + Quality Gate (v5.2)
+# Session Skill — 4-Layer Smart Retrieval + Consolidation Save + Quality Gate + Project Scaffold (v6.0)
 
 ## /start [task]
 > Khởi động phiên làm việc, load 4-Layer smart memory, set context
 
 ```
-APEX v4.2 Bootstrap Protocol:
+APEX v6.0 Bootstrap Protocol:
 
-LAYER 0 — CHECK ACTIVE_CONTEXT.md:
-  → Có: hiển thị "📍 Đang làm: [task] | Files: [X] | Tiếp theo: [Y]"
-         → /recall ngay, không cần đọc thêm
-  → Không: tiếp tục bình thường
+LAYER 0 — CHECK PROGRESS.md (hoặc ACTIVE_CONTEXT.md legacy):
+  → Có PROGRESS.md: hiển thị "📍 Phase: [X] | Last: [Y] | Next: [Z] | Blockers: [N]"
+         → /recall ngay nếu task dở, không cần đọc thêm
+  → Có ACTIVE_CONTEXT.md (legacy): hiển thị + gợi ý migrate sang PROGRESS.md
+  → Không có cả 2: tiếp tục bình thường
 
 LAYER A — RULES (luôn đọc):
   □ Đọc GEMINI.md: tech stack, rules hiện tại
@@ -49,7 +50,8 @@ SET TASK:
       (a) Đây có phải cách tốt nhất? (≥2 alternatives)
       (b) Có risk/side-effect nào đang bỏ qua?
       (c) User có cần approve không?
-  □ Tạo ACTIVE_CONTEXT.md với: task, approach, risks, checklist
+  □ Update PROGRESS.md: set Next task + status 🔄
+    (fallback: tạo ACTIVE_CONTEXT.md nếu project chưa có PROGRESS.md)
 
 ANTIGRAVITY PLAN:
   □ Generate task-list có numbered checkpoints
@@ -58,7 +60,7 @@ ANTIGRAVITY PLAN:
 
 OUTPUT FORMAT:
 ═══════════════════════════════════════
-🚀 APEX SESSION START (v4.2)
+🚀 APEX SESSION START (v6.0)
 ═══════════════════════════════════════
 📍 Task: [task nếu có]
 🏗️ Phase: [X] | Wave: [Y]
@@ -74,17 +76,96 @@ OUTPUT FORMAT:
 ═══════════════════════════════════════
 ```
 
-**Output:** `ACTIVE_CONTEXT.md` + task plan với checkpoints
+**Output:** `PROGRESS.md` updated (hoặc `ACTIVE_CONTEXT.md` legacy) + task plan với checkpoints
 
 ---
 
 ## /recall
-> Quick resume từ ACTIVE_CONTEXT.md — không cần load lại toàn bộ
+> Quick resume từ PROGRESS.md — không cần load lại toàn bộ
 
 ```
-□ Đọc ACTIVE_CONTEXT.md
+□ Đọc PROGRESS.md (hoặc ACTIVE_CONTEXT.md legacy)
 □ Hiển thị: snapshot hiện tại + NEXT IMMEDIATE ACTION
 □ Tiếp tục từ đúng vị trí đã checkpoint
+```
+
+---
+
+## /init [type]
+> Scaffold dự án mới theo chuẩn BKNS + APEX — tạo toàn bộ cấu trúc files
+
+```
+INPUT: [type] = web | api | fullstack | script | bkns | custom
+
+STEP 1 — AUTO-DETECT (nếu không có [type]):
+  □ Scan thư mục hiện tại: đã có package.json? framework nào?
+  □ Gợi ý type phù hợp
+
+STEP 2 — SCAFFOLD FILES (từ templates/):
+  □ GEMINI.md           ← từ templates/GEMINI-PROJECT.md, fill tech stack
+  □ CONVENTIONS.md      ← từ templates/CONVENTIONS.md, fill per project
+  □ PROGRESS.md         ← từ templates/PROGRESS.md, init empty
+  □ LESSONS.md          ← từ templates (empty, APEX format)
+  □ CHANGELOG.md        ← từ templates/CHANGELOG.md, init [Unreleased]
+  □ README.md           ← generate overview + quick start
+  □ .env.example        ← common env vars cho project type
+  □ .gitignore          ← optimized cho project type
+
+STEP 3 — SCAFFOLD DOCS (nếu type ≠ script):
+  □ docs/SECURITY-SPEC.md    ← từ templates/SECURITY-SPEC.md
+  □ docs/adr/                ← từ templates/ADR.md (index + first ADR)
+  □ docs/TASK-BREAKDOWN.md   ← từ templates/TASK-BREAKDOWN.md (nếu cần)
+
+STEP 4 — TYPE-SPECIFIC:
+  web:       → .prettierrc, tsconfig.json, vite/next config
+  api:       → Dockerfile, ecosystem.config.js, .dockerignore
+  fullstack: → web + api combined
+  script:    → minimal (GEMINI + README + tests/)
+  bkns:      → full BKNS standard (DEPLOYMENT.md, PROJECT-META.md)
+
+STEP 5 — CHECKLIST VERIFY:
+  □ GEMINI.md có đủ 9 sections?
+  □ SECURITY-SPEC.md tồn tại?
+  □ PROGRESS.md khởi tạo đúng?
+  □ .gitignore không thiếu patterns?
+  □ README có dev setup commands?
+
+OUTPUT FORMAT:
+═══════════════════════════════════════
+🏗️ PROJECT SCAFFOLDED ({type})
+═══════════════════════════════════════
+📁 Created: {N} files
+📋 GEMINI.md:        ✅ (9 sections)
+🔒 SECURITY-SPEC.md: ✅
+📊 PROGRESS.md:      ✅
+📝 CONVENTIONS.md:   ✅
+🎯 Next: Fill in placeholder values trong GEMINI.md
+═══════════════════════════════════════
+```
+
+---
+
+## /status
+> Quick project overview — đọc PROGRESS.md và báo cáo nhanh
+
+```
+□ Đọc PROGRESS.md → parse Current State
+□ Đọc GEMINI.md → project name, phase
+□ Đọc LESSONS.md → count entries
+
+OUTPUT FORMAT:
+═══════════════════════════════════════
+📊 PROJECT STATUS — {project-name}
+═══════════════════════════════════════
+🏗️ Phase: {phase} | Wave: {wave}
+📋 Tasks: {done}/{total} done · {blocked} blocked
+⬜ Next: {next task}
+❌ Blockers: {blocker hoặc "None"}
+📝 Lessons: {N} entries (last: {date})
+📊 Context Health: 🟢/🟡/🟠/🔴/💀
+═══════════════════════════════════════
+Quick start: /build {next task}
+═══════════════════════════════════════
 ```
 
 ---
@@ -125,7 +206,7 @@ COMPACTION DECISION GUIDE (khi nào nên checkpoint/compact?):
 
 ```
 STEP 1 — MEMORY AUDIT
-  □ Đọc ACTIVE_CONTEXT.md → liệt kê task xong/còn dở
+  □ Đọc PROGRESS.md (hoặc ACTIVE_CONTEXT.md legacy) → liệt kê task xong/còn dở
   □ Task dở → cảnh báo: "⚠️ [N] task chưa xong. Tiếp tục hay lưu tạm?"
 
 STEP 2 — VERIFICATION GATE (Evidence Before Claims)
@@ -190,11 +271,14 @@ STEP 7 — AUTO-MEMORY UPDATE
   □ AI tự quyết nội dung (user không cần review)
 
 STEP 8 — UPDATE STATE + CLEANUP
-  □ Merge ACTIVE_CONTEXT quan trọng → STATE.md
+  □ Update PROGRESS.md (KHÔNG XÓA — persistent session memory):
+     - Task completed: status → ✅ DONE
+     - Update "Current State" section
+     - Append session log: | {date} | {task} | {summary} | {lessons} |
   □ Cập nhật CHANGELOG.md: những gì đã thay đổi
-  □ Archive ACTIVE_CONTEXT.md (timestamp) → Xóa ACTIVE_CONTEXT.md
   □ README sync check (có cần update không?)
   □ git push (MANDATORY — không xong = không "done")
+  □ Nếu project dùng ACTIVE_CONTEXT.md (legacy) → gợi ý migrate sang PROGRESS.md
 ```
 
 ---

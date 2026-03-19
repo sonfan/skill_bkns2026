@@ -128,6 +128,13 @@ BƯỚC 0 — MEMORY LOAD (v4.2 Biomimetic Retrieval)
   □ Auto-memory: check .ai/memory/MEMORY.md
   🛑 STOP: Nếu chưa hoàn thành Bước 0, KHÔNG code.
 
+BƯỚC 0.5 — SECURITY CHECK (v6.0 — BKNS pattern)
+  □ Kiểm tra: project có docs/SECURITY-SPEC.md không?
+  □ Nếu CÓ → đọc TOÀN BỘ SECURITY-SPEC.md trước khi viết code
+  □ Internalize security rules cho task hiện tại
+  □ Nếu task liên quan auth/data/API → alert: "🔒 Security-sensitive task"
+  □ Nếu KHÔNG có → skip (nhưng gợi ý tạo bằng /init nếu project mới)
+
 BƯỚC 1 — SEARCH FIRST
   □ /search đã chạy chưa? (nếu chưa → chạy trước)
   □ Task ≥3 files? → /spec hoặc /plan bắt buộc trước

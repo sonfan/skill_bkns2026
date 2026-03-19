@@ -1,30 +1,31 @@
-# APEX Skill System v5.2
+# APEX Skill System v6.0
 
 > 🧠 **AI không bao giờ quên.** Mỗi phiên đều học hỏi và kết nối với quá khứ.
 
 **APEX**: Adaptive Pattern EXtraction — hệ thống skill cho AI coding assistant (Antigravity / Gemini CLI).
 
-## ✨ What's New (v5.2 — Selective Upgrade)
+## ✨ What's New (v6.0 — BKNS Scaffold Integration)
 
-- **Verification Report** — Output chuẩn PASS/FAIL sau mỗi `/build` verify. Structured table: Build / Types / Lint / Tests / Security / Diff / Overall
-- **Context Health Monitor v2.1** — 5-level scale (thêm 🟠 Attention 50-70%). Research-backed: 70%→precision loss, 85%→hallucinations (ACM 2025 + Florian Guide)
-- **Compaction Decision Guide** — Bảng quyết định khi nào nên `/checkpoint` vs tiếp tục (từ ECC strategic-compact)
-- **Hypothesis-Driven Debugging** — Phase 2 `/fix` thêm form→verify→iterate hypothesis trước 5-WHY
-- **`/skill-audit` command** — 4-phase kiểm tra sức khỏe skill system (Inventory→Quality→Summary→Recommendations)
-- **Token Optimization** — GEMINI.md giảm 24.5% (16,599→12,536 bytes). Verbose sections → `references/`
+- **`/init [type]` command** — Scaffold dự án mới (web/api/fullstack/script/bkns). Auto-tạo GEMINI.md, CONVENTIONS.md, PROGRESS.md, SECURITY-SPEC.md, docs/ structure
+- **`/status` command** — Quick project overview: tasks, blockers, context health
+- **PROGRESS.md persistent** — Thay ACTIVE_CONTEXT.md. Session memory không bị xóa sau `/save`
+- **SECURITY-SPEC mandatory** — `/build` đọc SECURITY-SPEC.md trước khi code (Rule 28, BKNS pattern)
+- **Risk Classification** — Bảng phân loại risk cho actions: Read → Auto, Delete → Approval (Rule 27)
+- **6 templates mới** — GEMINI-PROJECT, CONVENTIONS, PROGRESS, SECURITY-SPEC, TASK-BREAKDOWN, ADR
 
 ### Previous Versions
+- **v5.2**: Verification Report, Context Health v2.1 (5-level), Compaction Guide, `/skill-audit` — ECC 78k⭐
 - **v5.0**: Reflexion Loop, Context Health v2 (3 chiều) — [NeoLabHQ/context-engineering-kit](https://github.com/NeoLabHQ/context-engineering-kit)
 - **v4.2**: Biomimetic Memory (world/experience/mental_model), 3-Strategy Recall — [vectorize-io/hindsight](https://github.com/vectorize-io/hindsight)
 - **v4.1**: Verification Gate, Subagent Orchestration — [obra/superpowers](https://github.com/obra/superpowers)
 - **v4.0**: Progressive Disclosure, /gsd, Ultrathink — [GSD2](https://github.com/jlowin/gsd2)
 
-## 📦 9 Skills — 36 Commands
+## 📦 9 Skills — 37 Commands
 
 | # | Skill | Commands | Purpose |
 |---|---|---|---|
-| 1 | **session** | `/start` `/save` `/checkpoint` `/review` `/recall` | 4-Layer Bootstrap + Compaction Guide |
-| 2 | **build** ⭐ | `/build` `/plan` `/search` `/gsd` | TDD + Search-First + Verification Report |
+| 1 | **session** | `/start` `/save` `/checkpoint` `/review` `/recall` `/init` `/status` | 4-Layer Bootstrap + Scaffold + Compaction |
+| 2 | **build** ⭐ | `/build` `/plan` `/search` `/gsd` | TDD + Search-First + Security-Spec + Ultrathink |
 | 3 | **fix** | `/fix` | 4-Phase Debug + Hypothesis-Driven |
 | 4 | **craft** | `/craft` `/audit` `/tokens` `/e2e` | UI + Design Tokens + WCAG + Browser |
 | 5 | **secure** | `/security` `/harden` `/ship` | OWASP + Hardening + Production |

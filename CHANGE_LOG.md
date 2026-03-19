@@ -1,5 +1,21 @@
 # CHANGE LOG — Skill Repository
 
+## 2026-03-19
+
+### Changed
+- **APEX v6.0 — BKNS Scaffold Integration**
+  - **session/SKILL.md**: `/init [type]` command — project scaffold generator (web/api/fullstack/script/bkns). Auto-tạo GEMINI.md, CONVENTIONS.md, PROGRESS.md, SECURITY-SPEC.md, README, docs/ structure
+  - **session/SKILL.md**: `/status` command — quick project overview (tasks done/todo, blockers, context health)
+  - **session/SKILL.md**: PROGRESS.md persistent — thay ACTIVE_CONTEXT.md (không xóa sau /save). Backward compatible với ACTIVE_CONTEXT legacy
+  - **session/SKILL.md**: Layer 0 updated — detect PROGRESS.md first, fallback ACTIVE_CONTEXT.md
+  - **build/SKILL.md**: BƯỚC 0.5 — Security Check mandatory. Đọc SECURITY-SPEC.md trước khi code (BKNS pattern)
+  - **GEMINI.md**: 3 rules mới (27-29): Risk Classification Table, SECURITY-SPEC Mandatory, Persistent PROGRESS
+  - **GEMINI.md**: Documentation table updated (thêm PROGRESS, CONVENTIONS, SECURITY-SPEC)
+  - **GEMINI.md**: Skill table updated: session (7 commands), build (Security-Spec). Total: 37 commands
+  - Files new: templates/GEMINI-PROJECT.md, templates/CONVENTIONS.md, templates/PROGRESS.md, templates/SECURITY-SPEC.md, templates/TASK-BREAKDOWN.md, templates/ADR.md
+  - Files changed: session/SKILL.md, build/SKILL.md, GEMINI.md, CHANGE_LOG.md, README.md
+  - Research-based: BKNS Project Scaffold Guide (bkns-project-template), claudefa.st (Claude Fast Kit), aitmpl.com, Anthropic Context Engineering
+
 ## 2026-03-16
 
 ### Changed

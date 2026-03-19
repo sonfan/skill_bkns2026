@@ -1,4 +1,4 @@
-# APEX SKILL SYSTEM v5.2 — Global Rules
+# APEX SKILL SYSTEM v6.0 — Global Rules
 > Applied to ALL sessions in this project. Read before every task.
 > Triết lý: AI không bao giờ quên. Mỗi phiên đều học hỏi và kết nối với quá khứ. Fresh context = High quality.
 
@@ -57,6 +57,22 @@
 ### Memory Intelligence (v4.2 — Hindsight-inspired)
 26. **BIOMIMETIC MEMORY** — Mỗi memory entry PHẢI có `type`: `world` (facts về tech/framework/tool, tĩnh), `experience` (trải nghiệm debug/build/deploy cụ thể), `mental_model` (pattern/insight tổng hợp từ nhiều experiences). Giúp recall chính xác: bug → search experience trước, design → search world + mental_model.
 
+### Project Scaffold & Safety (v6.0 — BKNS-inspired)
+27. **RISK CLASSIFICATION** — Trước khi thực thi, phân loại risk:
+
+| Action | Risk | Auto-execute? | Require Approval? |
+|---|---|---|---|
+| Read files, search | 🟢 None | ✅ Yes | No |
+| Edit ≤2 files, no breaking | 🟡 Low | ✅ Yes | No |
+| Edit ≥3 files | 🟠 Medium | ❌ No | Yes — show plan |
+| Delete files | 🔴 High | ❌ No | Yes — explicit |
+| Run npm install/update | 🔴 High | ❌ No | Yes — show changes |
+| Deploy/push production | 🔴 Critical | ❌ No | Yes — full checklist |
+| Write .env / secrets | 🔴 Critical | ❌ No | Yes + verify |
+
+28. **SECURITY-SPEC MANDATORY** — Nếu project có `docs/SECURITY-SPEC.md`, PHẢI đọc trước khi viết code. Không có exception. Pattern từ BKNS: security rules = frozen SSOT.
+29. **PERSISTENT PROGRESS** — Dùng `PROGRESS.md` thay `ACTIVE_CONTEXT.md`. KHÔNG XÓA sau `/save`. Session memory phải persistent qua sessions.
+
 ---
 
 ## ANTIGRAVITY NATIVE FEATURES — Sử dụng tích cực
@@ -74,12 +90,12 @@ Context Health       → Monitor context window, auto-suggest fresh session (v4.
 
 ---
 
-## 🎯 9 SKILLS — 35 COMMANDS
+## 🎯 9 SKILLS — 37 COMMANDS
 
 | # | Skill | Commands | Purpose |
 |---|---|---|---|
-| 1 | **session** | `/start` `/save` `/checkpoint` `/review` `/recall` | 🔄 6-Layer Bootstrap + Consolidation Save + Quality Gate |
-| 2 | **build** ⭐ | `/build` `/plan` `/search` `/gsd` | 🔥 Search-First + TDD + GSD Cycle + Ultrathink |
+| 1 | **session** | `/start` `/save` `/checkpoint` `/review` `/recall` `/init` `/status` | 🔄 4-Layer Bootstrap + Scaffold + Compaction |
+| 2 | **build** ⭐ | `/build` `/plan` `/search` `/gsd` | 🔥 Search-First + TDD + Security-Spec + Ultrathink |
 | 3 | **fix** | `/fix` | 🐛 4-Phase Debug + Insight Match + Auto-Ingest |
 | 4 | **craft** | `/craft` `/audit` `/tokens` `/e2e` | 🎨 UI + Design Tokens + WCAG + Browser Testing |
 | 5 | **secure** | `/security` `/harden` `/ship` | 🔒 OWASP + Hardening + Production Readiness |
@@ -186,8 +202,10 @@ Kết thúc phiên?           → /save                    (auto /consolidate)
 | `CHANGELOG.md` | A — Rules | Timeline thay đổi theo ngày | Tasks, lessons |
 | `INSTINCTS.md` | A — Rules | Learned patterns + confidence 0.0–1.0 | Bug reports |
 | `INSIGHTS.md` | C — Semantic | Cross-memory connections, compound insights | Raw data |
-| `.ai/memory/MEMORY.md` | D — Auto | AI notes: debugging, gotchas, ≤200 dòng | User rules |
-| `ACTIVE_CONTEXT.md` | D — Auto | Working memory phiên hiện tại | Persistent info |
+| `PROGRESS.md` | D — Session | Session memory **persistent** (KHÔNG xóa) | Một-lần info |
+| `ACTIVE_CONTEXT.md` | D — Legacy | Working memory (deprecated → migrate PROGRESS) | Persistent info |
+| `CONVENTIONS.md` | A — Rules | Project-specific coding standards | Global rules |
+| `SECURITY-SPEC.md` | A — Rules | Security rules (frozen SSOT) | Code |
 
 ---
 
@@ -195,6 +213,7 @@ Kết thúc phiên?           → /save                    (auto /consolidate)
 
 | Date | Change |
 |---|---|
+| **2026-03-19** | **APEX v6.0**: BKNS Scaffold Integration — `/init` command (project scaffold generator), `/status` command (quick overview), PROGRESS.md persistent (thay ACTIVE_CONTEXT), SECURITY-SPEC mandatory (đọc trước khi code), Risk Classification Table (Rule 27-29). 6 new templates: GEMINI-PROJECT, CONVENTIONS, PROGRESS, SECURITY-SPEC, TASK-BREAKDOWN, ADR. Research-based: BKNS Project Scaffold Guide + claudefa.st + 8 open-source frameworks. |
 | **2026-03-14** | **APEX v4.2**: Biomimetic Memory Upgrade — Rule 26 (BIOMIMETIC MEMORY: world/experience/mental_model types), 3-Strategy Recall (semantic + keyword + temporal), Reflect Auto-Trigger in /consolidate, type-aware retrieval in /build + /fix. Research-based: vectorize-io/hindsight (SOTA agent memory). |
 | 2026-03-14 | **APEX v4.1**: Superpowers Integration — Verification Gate (Rule 24), Subagent Orchestration (Rule 25), anti-rationalization tables, model selection strategy, subagent prompt templates. Research-based: obra/superpowers (6.9k⭐). |
 | 2026-03-14 | **APEX v4.0**: Progressive Disclosure (references/ folders), /gsd command (GSD workflow), Ultrathink Mode, Context Health Monitor. 3 rules mới (21-23). Skills: build/fix/craft được refactor với references/. Research-based: GSD2 (23k⭐), Anthropic SKILL.md patterns, Claude Code docs, sub-agent patterns, context rot research. |
