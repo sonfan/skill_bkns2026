@@ -3,7 +3,7 @@ name: fix
 description: "Bug fixing and debugging. Use for /fix (debug any error), error traces, crashes, unexpected behavior, failing tests. Triggers on: lỗi, bug, crash, không chạy được, error, exception, fix, debug, sửa lỗi."
 ---
 
-# Fix Skill — 4-Phase Debug + Insight Match + Auto-Ingest (v5.2)
+# Fix Skill — 4-Phase Debug + Kaizen + Browser Debug + N8N Debug (v7.0)
 
 > 📂 Chi tiết bổ sung: `fix/references/patterns.md` (bug classification, common patterns, browser agent)
 
@@ -89,4 +89,93 @@ PHASE 4 — VERIFY + LEARN (APEX Enhanced)
 
 → Bug classification & common patterns: references/patterns.md
 → Browser Agent workflow: references/patterns.md
+```
+
+---
+
+## BROWSER DEBUG PROTOCOL (v7.0) 🌐
+> CSS issues, layout broken, JavaScript errors — Browser Agent workflow
+
+```
+STEP 1 — VISUAL IDENTIFICATION:
+  □ Open Browser Agent → navigate to problem URL
+  □ Screenshot: what does the bug look like?
+  □ Compare with expected design (mockup/reference)
+  □ Check multiple breakpoints (mobile/tablet/desktop)
+  □ Check dark mode nếu applicable
+
+STEP 2 — CONSOLE & NETWORK:
+  □ Browser console errors? (JavaScript exceptions)
+  □ Network tab: failed requests? (404, 500, CORS)
+  □ CSS computed values: are styles being applied?
+  □ Specificity conflicts: inspector shows overridden styles?
+
+STEP 3 — COMMON WEB BUGS:
+  | Symptom | Likely Cause | Quick Fix |
+  |---|---|---|
+  | Layout broken | Missing CSS, wrong selector | Check class names, inspect |
+  | Text overflow | No overflow handling | overflow-wrap, truncate |
+  | Image missing | Wrong path, not deployed | Check src, network tab |
+  | Button no response | JS error, wrong event | Console errors, handler |
+  | Mobile broken | No responsive styles | Media queries, viewport |
+  | Flash of content | Font/CSS loading order | Preload, display=swap |
+  | Scroll jank | Heavy paint, no GPU accel | transform instead of top |
+
+STEP 4 — FIX & VERIFY:
+  □ Fix targeted CSS/JS
+  □ Screenshot AFTER fix (compare with before)
+  □ Test all breakpoints again
+  □ Check no regressions on other components
+```
+
+---
+
+## KAIZEN ROOT CAUSE ANALYSIS (v7.0) 🎯
+
+```
+5 WHYS TEMPLATE:
+  Bug: [describe the bug]
+  Why 1: Tại sao bug xảy ra? → [answer]
+  Why 2: Tại sao [answer 1]? → [answer]
+  Why 3: Tại sao [answer 2]? → [answer]
+  Why 4: Tại sao [answer 3]? → [answer]
+  Why 5: Tại sao [answer 4]? → [ROOT CAUSE]
+
+  Root cause: [1 câu rõ ràng]
+  Fix: [giải pháp targeted]
+  Prevention: [làm gì để không tái diễn]
+
+PREVENTION PLAN:
+  □ Có thể thêm automated check không? (lint rule, test)
+  □ Có cần update CONVENTIONS.md không?
+  □ Bug pattern này có xảy ra ở chỗ khác? (→ grep codebase)
+  □ Cần thêm vào INSTINCTS.md? (/instinct)
+```
+
+---
+
+## N8N WORKFLOW DEBUG (v7.0) ⚡
+
+```
+STEP 1 — EXECUTION ANALYSIS:
+  □ Open execution history trong N8N
+  □ Check: node nào failed? Error message gì?
+  □ Input data của failed node: correct format?
+  □ Check: execution timeout? Memory limit?
+
+STEP 2 — COMMON N8N ISSUES:
+  | Error | Cause | Fix |
+  |---|---|---|
+  | 401 Unauthorized | Expired token/wrong key | Refresh credentials |
+  | 429 Too Many Req | Rate limit hit | Add Wait node, reduce freq |
+  | Timeout | Slow API/large data | Increase timeout, paginate |
+  | Empty output | Wrong JSON path | Check expression, test data |
+  | Webhook not firing | URL wrong, N8N down | Verify URL, check N8N status |
+
+STEP 3 — FIX & VERIFY:
+  □ Fix node configuration
+  □ Test with "Execute Workflow" (manual trigger)
+  □ Verify output data correct
+  □ Test error path (force error scenario)
+  □ Check: other workflows affected?
 ```

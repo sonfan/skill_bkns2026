@@ -1,4 +1,4 @@
-# APEX SKILL SYSTEM v6.0 — Global Rules
+# APEX SKILL SYSTEM v7.0 — Global Rules
 > Applied to ALL sessions in this project. Read before every task.
 > Triết lý: AI không bao giờ quên. Mỗi phiên đều học hỏi và kết nối với quá khứ. Fresh context = High quality.
 
@@ -90,19 +90,20 @@ Context Health       → Monitor context window, auto-suggest fresh session (v4.
 
 ---
 
-## 🎯 9 SKILLS — 37 COMMANDS
+## 🎯 10 SKILLS — 59 COMMANDS
 
 | # | Skill | Commands | Purpose |
 |---|---|---|---|
 | 1 | **session** | `/start` `/save` `/checkpoint` `/review` `/recall` `/init` `/status` | 🔄 4-Layer Bootstrap + Scaffold + Compaction |
-| 2 | **build** ⭐ | `/build` `/plan` `/search` `/gsd` | 🔥 Search-First + TDD + Security-Spec + Ultrathink |
-| 3 | **fix** | `/fix` | 🐛 4-Phase Debug + Insight Match + Auto-Ingest |
-| 4 | **craft** | `/craft` `/audit` `/tokens` `/e2e` | 🎨 UI + Design Tokens + WCAG + Browser Testing |
-| 5 | **secure** | `/security` `/harden` `/ship` | 🔒 OWASP + Hardening + Production Readiness |
-| 6 | **automate** | `/n8n` `/integrate` `/mcp` | ⚡ N8N + API Design + MCP Tool Design |
-| 7 | **content** | `/seo` `/article` `/brief` `/audit-content` | 📝 SEO Pipeline + Content Engine |
-| 8 | **spec** ⭐ | `/spec` `/handoff` `/adr` `/runbook` `/apidoc` `/componentdoc` | 📋 Architecture + Handoff + API/Component Docs |
-| 9 | **learn** ⭐ | `/learn` `/instinct` `/evolve` `/review-instincts` `/consolidate` `/cross-link` `/skill-audit` | 🧠 Ingest + Consolidation + Instinct Evolution + Skill Health |
+| 2 | **build** ⭐ | `/build` `/plan` `/search` `/gsd` | 🔥 Search-First + TDD + Web Patterns + Ultrathink |
+| 3 | **fix** | `/fix` | 🐛 4-Phase Debug + Kaizen + Browser/N8N Debug |
+| 4 | **craft** ⭐ | `/craft` `/design` `/animate` `/responsive` `/palette` `/audit` `/tokens` `/e2e` | 🎨 Premium UI + Design System + WCAG + Visual Testing |
+| 5 | **secure** | `/security` `/harden` `/ship` `/monitor` `/ssl` `/firewall` | 🔒 OWASP + Runtime Monitoring + VPS Security |
+| 6 | **automate** ⭐ | `/n8n` `/n8n-ai` `/openclaw` `/pipeline` `/monitor-flow` `/integrate` `/mcp` | ⚡ N8N AI + OpenClaw + Pipeline + API |
+| 7 | **content** ⭐ | `/seo` `/article` `/brief` `/cluster` `/competitor` `/refresh` `/internal-link` `/schema` `/audit-content` | 📝 SEO Engine v2 + Topic Clusters + Schema |
+| 8 | **spec** | `/spec` `/spec refine` `/spec verify` `/handoff` `/adr` `/runbook` `/apidoc` `/componentdoc` | 📋 SDD + Architecture + Handoff |
+| 9 | **learn** | `/learn` `/instinct` `/evolve` `/review-instincts` `/consolidate` `/cross-link` `/skill-audit` | 🧠 Ingest + Consolidation + Instinct Evolution |
+| 10 | **verify** 🆕 | `/verify` `/fact-check` `/regression` `/test-web` | ✅ Anti-Hallucination + CoV + Web Testing |
 
 ---
 
@@ -125,10 +126,11 @@ Context Health       → Monitor context window, auto-suggest fresh session (v4.
 | Debug, lỗi, crash | `fix` |
 | UI, design, component | `craft` |
 | Security, deploy, production | `secure` |
-| N8N, API, automation, MCP | `automate` |
-| Bài viết, SEO, content | `content` |
+| N8N, API, automation, MCP, OpenClaw | `automate` |
+| Bài viết, SEO, content, cluster | `content` |
 | Architecture, docs, handoff | `spec` |
-| Học hỏi, patterns, instincts, consolidate | `learn` |
+| Học hỏi, patterns, instincts | `learn` |
+| Kiểm tra, verify, fact-check, test web | `verify` |
 
 ---
 
@@ -145,19 +147,41 @@ Viết code?                → /build [task]           🔥 TDD + Search-First
 Deep thinking?            → ultrathink: [task]      🆕 v4.0
 Gặp bug?                  → /fix [bug]              🐛 4-Phase Debug
 Design UI?                → /craft [task]           🎨 Tokens + WCAG
+Design system?            → /design [style]         🆕 v7.0
+Animations?               → /animate [scope]        🆕 v7.0
+Color palette?            → /palette [theme]        🆕 v7.0
+Responsive test?          → /responsive [url]       🆕 v7.0
 Design tokens?            → /tokens [scope]
 Browser test?             → /e2e [scope]
 Audit chất lượng?         → /audit [scope]
 Audit bảo mật?            → /security [target]      🔒 OWASP
 Hardening?                → /harden [service]
+Server monitoring?        → /monitor [server]       🆕 v7.0
+SSL certificate?          → /ssl [domain]           🆕 v7.0
+Firewall audit?           → /firewall [server]      🆕 v7.0
 Chuẩn bị deploy?          → /ship [env]
 API / webhook?            → /integrate [service]     ⚡
 N8N workflow?             → /n8n [task]              ⚡
+N8N AI workflow?          → /n8n-ai [task]          🆕 v7.0
+OpenClaw automation?      → /openclaw [task]        🆕 v7.0
+Automation pipeline?      → /pipeline [flow]        🆕 v7.0
+Monitor workflow?         → /monitor-flow [id]      🆕 v7.0
 Thiết kế MCP tool?        → /mcp [tool-name]
+Topic cluster?            → /cluster [topic]        🆕 v7.0
+Competitor analysis?      → /competitor [url]       🆕 v7.0
+Refresh bài cũ?           → /refresh [url]          🆕 v7.0
+Internal linking?         → /internal-link [site]   🆕 v7.0
+Schema markup?            → /schema [type]          🆕 v7.0
 Content brief?            → /brief [topic]           📝
 Viết bài SEO?             → /seo [topic]
 Viết article?             → /article [topic]
 Audit content?            → /audit-content [URL]
+Verify code quality?      → /verify [scope]         🆕 v7.0
+Fact-check AI code?       → /fact-check [code]      🆕 v7.0
+Regression check?         → /regression [scope]     🆕 v7.0
+Test website?             → /test-web [url]         🆕 v7.0
+Spec refine?              → /spec refine [file]     🆕 v7.0
+Spec verify?              → /spec verify [scope]    🆕 v7.0
 Architecture docs?        → /spec [scope]            📋
 Bàn giao dự án?           → /handoff [project]
 API documentation?        → /apidoc [endpoint]
@@ -175,6 +199,7 @@ Review code?              → /review [scope]
 Lưu context?              → /checkpoint
 Kết thúc phiên?           → /save                    (auto /consolidate)
 ```
+```
 
 ---
 
@@ -188,6 +213,11 @@ Kết thúc phiên?           → /save                    (auto /consolidate)
 | Feature lớn | `/gsd` (D→P→E→V) |
 | Fix bug | `/fix` → `/learn` → `/consolidate` |
 | Deploy | `/audit` → `/security` → `/ship` |
+| Build website | `/design` → `/craft` → `/build` → `/test-web` → `/ship` |
+| SEO article | `/brief` → `/article` → `/schema` → `/seo` |
+| Topic cluster | `/cluster` → `/brief` (each) → `/article` (each) → `/internal-link` |
+| N8N AI workflow | `/n8n-ai` → `/integrate` → `/monitor-flow` |
+| Server security | `/monitor` → `/ssl` → `/firewall` → `/security` |
 
 ---
 
@@ -213,6 +243,7 @@ Kết thúc phiên?           → /save                    (auto /consolidate)
 
 | Date | Change |
 |---|---|
+| **2026-03-23** | **APEX v7.0**: Targeted Upgrade for Website/UI/N8N/SEO — New `verify` skill (Anti-Hallucination + CoV + LLM-as-Judge + Web Testing). `craft` v7.0: +4 commands (`/design`, `/animate`, `/responsive`, `/palette`) + design-patterns reference. `content` v7.0: +5 commands (`/cluster`, `/competitor`, `/refresh`, `/internal-link`, `/schema`) + seo-advanced reference. `automate` v7.0: +4 commands (`/n8n-ai`, `/openclaw`, `/pipeline`, `/monitor-flow`) + n8n-ai-patterns reference. `secure` v7.0: +3 commands (`/monitor`, `/ssl`, `/firewall`) + WordPress/N8N security. `build` v7.0: LLM-as-Judge reflexion + web-patterns reference. `spec` v7.0: +2 commands (`/spec refine`, `/spec verify`) + SDD. `fix` v7.0: Browser Debug + Kaizen 5 Whys + N8N Debug. 10 skills, 59 commands, 29 rules. Research: 10+ GitHub repos (240k⭐), 13 papers, NeoLabHQ/context-engineering-kit, sickn33/antigravity-awesome-skills (1306+), affaan-m/everything-claude-code (78k⭐). |
 | **2026-03-19** | **APEX v6.0**: BKNS Scaffold Integration — `/init` command (project scaffold generator), `/status` command (quick overview), PROGRESS.md persistent (thay ACTIVE_CONTEXT), SECURITY-SPEC mandatory (đọc trước khi code), Risk Classification Table (Rule 27-29). 6 new templates: GEMINI-PROJECT, CONVENTIONS, PROGRESS, SECURITY-SPEC, TASK-BREAKDOWN, ADR. Research-based: BKNS Project Scaffold Guide + claudefa.st + 8 open-source frameworks. |
 | **2026-03-14** | **APEX v4.2**: Biomimetic Memory Upgrade — Rule 26 (BIOMIMETIC MEMORY: world/experience/mental_model types), 3-Strategy Recall (semantic + keyword + temporal), Reflect Auto-Trigger in /consolidate, type-aware retrieval in /build + /fix. Research-based: vectorize-io/hindsight (SOTA agent memory). |
 | 2026-03-14 | **APEX v4.1**: Superpowers Integration — Verification Gate (Rule 24), Subagent Orchestration (Rule 25), anti-rationalization tables, model selection strategy, subagent prompt templates. Research-based: obra/superpowers (6.9k⭐). |

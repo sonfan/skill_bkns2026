@@ -3,7 +3,7 @@ name: secure
 description: Security audit and production deployment. Use for /security (OWASP audit), /ship (pre-deploy checklist), /harden (security hardening). Triggers on "security", "bảo mật", "deploy", "production", "OWASP", "ship", "hardening", "vulnerability", "lỗ hổng".
 ---
 
-# Secure Skill — OWASP + Production Readiness + Deploy
+# Secure Skill — OWASP + Runtime Monitoring + Production Readiness (v7.0)
 
 ## /security [target]
 > OWASP Top 10 audit + security hardening
@@ -174,4 +174,122 @@ POST-DEPLOY SMOKE TEST (bắt buộc sau MỌI deploy — LESSONS #BUG-001):
   [ "$BODY" -gt 100 ] && echo "✅ Body: ${BODY}B" || echo "❌ EMPTY RESPONSE"
 
 SIGN-OFF: Code ✓  Security ✓  Performance ✓  Monitoring ✓  Rollback ✓  Smoke ✓
+```
+
+---
+
+## /monitor [server]
+> Runtime security monitoring — logs, processes, ports, intrusion detection
+
+```
+SERVER HEALTH CHECK:
+  □ Uptime: uptime -p
+  □ Load average: cat /proc/loadavg (alert if >CPU cores)
+  □ Memory: free -h (alert if >85% used)
+  □ Disk: df -h (alert if >80% used)
+  □ Process count: ps aux | wc -l
+
+SECURITY MONITORING:
+  □ Failed SSH logins: grep "Failed password" /var/log/auth.log | tail -20
+  □ fail2ban status: fail2ban-client status sshd
+  □ Active connections: ss -tlnp (unexpected listeners?)
+  □ Open ports: nmap localhost (compare with expected)
+  □ Running services: systemctl list-units --type=service --state=running
+  □ Cron jobs: crontab -l && ls /etc/cron.d/ (unexpected entries?)
+  □ Recent logins: last -10
+  □ Modified files (last 24h): find /etc -mtime -1 -type f
+
+LOG ANALYSIS:
+  □ nginx access: suspicious patterns (scanners, brute force)
+  □ nginx error: 502/503 errors, upstream timeouts
+  □ pm2 logs: crash loops, memory warnings
+  □ N8N logs: workflow execution errors
+  □ System: dmesg | tail (kernel errors, OOM kills)
+
+AUTOMATED ALERTS (recommend setup):
+  □ UptimeRobot/Uptime Kuma: HTTP check every 5min
+  □ fail2ban: auto-ban after 5 failed SSH attempts
+  □ Disk space: cron alert at 80%
+  □ SSL expiry: 14 days before expiry
+
+OUTPUT: Server health report + security issues + recommended actions
+```
+
+---
+
+## /ssl [domain]
+> SSL/TLS certificate check + auto-renewal guide
+
+```
+SSL CHECK:
+  □ Certificate valid: openssl s_client -connect domain.com:443
+  □ Expiry date: echo | openssl s_client -servername domain -connect domain:443 2>/dev/null | openssl x509 -noout -dates
+  □ Certificate chain: complete? (no missing intermediates)
+  □ TLS version: 1.2+ only (no SSLv3, TLSv1.0, TLSv1.1)
+  □ Strong ciphers: no NULL, RC4, DES, MD5
+  □ HSTS header: present with reasonable max-age?
+
+AUTO-RENEWAL (Let's Encrypt + Certbot):
+  □ Certbot installed: certbot --version
+  □ Auto-renewal: systemctl status certbot.timer
+  □ Test renewal: certbot renew --dry-run
+  □ Post-hook: nginx reload after renewal
+  □ Cron backup: 0 0 1 * * certbot renew --post-hook "nginx -s reload"
+
+SSL HARDENING (nginx):
+  ssl_protocols TLSv1.2 TLSv1.3;
+  ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:...;
+  ssl_prefer_server_ciphers on;
+  ssl_session_cache shared:SSL:10m;
+  ssl_session_timeout 1d;
+  ssl_stapling on;
+  ssl_stapling_verify on;
+
+OUTPUT: SSL health report + expiry countdown + hardening suggestions
+```
+
+---
+
+## /firewall [server]
+> UFW/iptables audit + recommended rules
+
+```
+FIREWALL AUDIT:
+  □ UFW status: ufw status verbose
+  □ Default policy: incoming=deny, outgoing=allow?
+  □ Allowed ports list:
+      22/tcp   — SSH (consider changing port)
+      80/tcp   — HTTP (redirect to HTTPS)
+      443/tcp  — HTTPS
+      [app ports] — only what's needed
+  □ Rate limiting: ufw limit ssh/tcp
+  □ No wildcard rules (0.0.0.0/0 on sensitive ports)
+
+RECOMMENDED RULES:
+  ufw default deny incoming
+  ufw default allow outgoing
+  ufw allow 22/tcp comment 'SSH'
+  ufw allow 80/tcp comment 'HTTP'
+  ufw allow 443/tcp comment 'HTTPS'
+  ufw limit ssh/tcp comment 'Rate limit SSH'
+  ufw enable
+
+WORDPRESS SECURITY:
+  □ wp-config.php: DISALLOW_FILE_EDIT = true
+  □ wp-config.php: define('FORCE_SSL_ADMIN', true)
+  □ Database prefix: not default 'wp_'
+  □ Admin URL: changed from /wp-admin? (plugin)
+  □ XML-RPC: disabled if not needed
+  □ File permissions: 644 files, 755 dirs, 400 wp-config
+  □ Plugin audit: remove unused, update all
+  □ User audit: no default 'admin' username
+
+N8N SECURITY:
+  □ N8N_BASIC_AUTH_ACTIVE=true (basic auth enabled)
+  □ N8N_ENCRYPTION_KEY set (credentials encrypted)
+  □ Execution data: auto-prune old executions
+  □ Webhook paths: not guessable
+  □ N8N behind reverse proxy with HTTPS
+
+OUTPUT: Firewall audit + rule recommendations + app-specific hardening
 ```

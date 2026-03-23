@@ -3,9 +3,9 @@ name: build
 description: "Feature implementation and code writing. Use for /build (implement feature with TDD), /plan (plan before code), /search (research), /gsd (full GSD cycle). Triggers on: viết code, implement, tạo feature, build, tdd, xây dựng, gsd."
 ---
 
-# Build Skill — Search-First + TDD + Memory-Enhanced Build (v5.2)
+# Build Skill — Search-First + TDD + Memory-Enhanced Build (v7.0)
 
-> 📂 Chi tiết bổ sung: `build/references/patterns.md` | `build/references/parallel-guide.md`
+> 📂 Chi tiết bổ sung: `build/references/patterns.md` | `build/references/parallel-guide.md` | `build/references/web-patterns.md`
 
 ---
 
@@ -180,16 +180,32 @@ BƯỚC 7 — ATOMIC COMMIT
   □ git commit -m "feat(module): mô tả"
   □ Update ACTIVE_CONTEXT.md
 
-BƯỚC 8 — REFLEXION (self-review sau commit)
+BƯỚC 8 — REFLEXION + LLM-AS-JUDGE (v7.0 enhanced)
   □ Đọc lại code vừa commit — tự hỏi:
     - "Code này solve đúng problem được đặt ra chưa?"
     - "Có edge case nào tôi bỏ sót?"
     - "Test coverage đủ cho logic mới chưa?"
     - "Nếu task có DEPLOY: build THẬT SỰ thành công? App accessible?"
+  □ LLM-as-Judge self-evaluation (rate 1-10):
+    | Dimension    | Score | Evidence |
+    |-------------|-------|----------|
+    | Correctness  | ?/10  | [why]    |
+    | Completeness | ?/10  | [why]    |
+    | Security     | ?/10  | [why]    |
+    | Performance  | ?/10  | [why]    |
+    Overall ≥7 → proceed | <7 → fix before merge
   □ Nếu phát hiện vấn đề → fix ngay + amend commit
   □ Nếu OK → tiếp tục task tiếp theo
 
   → Chi tiết checklists: references/patterns.md
+
+BƯỚC 9 — WEB-SPECIFIC CHECKS (nếu web project)
+  □ Lighthouse quick check: Performance ≥90, Accessibility ≥90
+  □ SEO verify: title, meta description, OG tags, canonical
+  □ Responsive: check 3 breakpoints (mobile/tablet/desktop)
+  □ sitemap.xml updated? robots.txt correct?
+  □ Images: WebP, lazy loading, alt text
+  → Chi tiết: references/web-patterns.md
 ```
 
 ---
@@ -262,4 +278,26 @@ ACTION khi phát hiện vấn đề:
   Agent C: Tests / documentation
 
 Sync point: Trước khi merge, chạy /review trên combined output
+```
+
+---
+
+## WEB DEVELOPMENT PATTERNS (v7.0) 🌐
+
+```
+THỨ TỰ ƯU TIÊN KHI BUILD WEBSITE:
+  1. Design Tokens (CSS custom properties) → /tokens hoặc /design
+  2. Components (Atomic Design) → /craft
+  3. Pages (compose components) → layout + routing
+  4. Polish (animations, responsive) → /animate + /responsive
+  5. SEO (meta, schema, sitemap) → /seo build checks
+  6. Verify (Lighthouse, links, forms) → /test-web
+
+COMPONENT-FIRST rule:
+  □ KHÔNG build pages trước → build components rồi compose
+  □ Mỗi component phải hoạt động độc lập
+  □ Test component trong isolation trước khi integrate
+  □ Responsive built-in từ đầu (mobile-first)
+
+→ Chi tiết patterns: references/web-patterns.md
 ```

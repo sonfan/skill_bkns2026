@@ -3,7 +3,7 @@ name: spec
 description: Architecture documentation, project handoff, ADR, runbooks, API docs, component docs. Use for /spec (system architecture), /handoff (project handoff doc), /adr (architecture decision record), /runbook (operations guide), /apidoc (API documentation), /componentdoc (component library docs). Triggers on "architecture", "spec", "handoff", "bàn giao", "ADR", "runbook", "API docs", "tài liệu", "documentation".
 ---
 
-# Spec Skill — Ultra Architecture + Handoff + Runbook + API/Component Docs
+# Spec Skill — SDD + Architecture + Handoff + API/Component Docs (v7.0)
 
 ## /spec [scope]
 > 15-section architecture document — bắt buộc trước khi code feature lớn
@@ -102,6 +102,62 @@ SECTION 15 — OPEN QUESTIONS & RISKS
   Technical risks + mitigation
   Dependencies on external teams
   Timeline concerns
+```
+
+---
+
+## /spec refine [spec-file]
+> Iterate on existing spec — refine based on feedback or new requirements
+
+```
+REFINEMENT PROTOCOL:
+  □ Re-read spec document
+  □ Identify sections needing update:
+      - New requirements discovered
+      - Technical constraints changed
+      - User feedback incorporated
+      - Dependencies resolved/changed
+  □ Update affected sections ONLY (đừng rewrite toàn bộ)
+  □ Track changes: add "[Updated YYYY-MM-DD]" markers
+  □ Re-validate: goals still achievable with changes?
+  □ Cascade check: does change affect other sections?
+
+--human-in-the-loop flag:
+  □ Pause after each major section update
+  □ Show diff to user for approval
+  □ Only proceed with user confirmation
+
+OUTPUT: Updated spec + change summary
+```
+
+---
+
+## /spec verify [scope]
+> Verify implementation matches specification
+
+```
+VERIFICATION PROTOCOL:
+  □ Load original spec (docs/SPEC-[feature].md)
+  □ For each Goal (Section 3):
+      - Is it implemented? Evidence?
+      - Does it meet acceptance criteria (Section 4)?
+  □ For each API Contract (Section 7):
+      - Endpoints match spec?
+      - Request/response schemas correct?
+  □ For each Security Consideration (Section 9):
+      - Threat mitigations implemented?
+  □ For each Performance Requirement (Section 10):
+      - Benchmarks meet targets?
+
+COMPLIANCE REPORT:
+  ┌─────────────────────────────────────────┐
+  │ SPEC COMPLIANCE REPORT              │
+  │ Goals:      [X/Y met]               │
+  │ API:        [X/Y endpoints match]    │
+  │ Security:   [X/Y mitigations done]   │
+  │ Performance:[X/Y targets met]        │
+  │ Overall:    [COMPLIANT/GAPS FOUND]   │
+  └─────────────────────────────────────────┘
 ```
 
 ---
